@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 
-export default function KakaoMapComponent() {
+export default function KakaoMap() {
   const mapRef = useRef(null);
 
   useEffect(()=>{
@@ -22,6 +22,6 @@ export default function KakaoMapComponent() {
 
   }, [mapRef]);
   return (
-    <div ref={mapRef} style={{width: '320px', height: '320px'}}></div>
+    <div ref={mapRef} style={{width: '100%', height: '100%'}}></div>
   );
 }
