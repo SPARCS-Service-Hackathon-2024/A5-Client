@@ -4,14 +4,15 @@ import KakaoMap from "./KakaoMap";
 import SearchBar from "./SearchBar";
 import SearchCategory from "./SearchCategory";
 
+const MapContainer = styled.div`
+position: absolute;
+left: 0;
+top: 0;
+height: 100%;
+width: 100%;
+`;
+
 export default function SearchPage() {
-    const MapContainer = styled.div`
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-    `;
     return (
         <MapContainer>
             <KakaoMap />

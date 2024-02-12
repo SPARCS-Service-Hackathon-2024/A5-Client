@@ -1,6 +1,35 @@
 
 import styled from "@emotion/styled";
 
+const CategoryContainer = styled.div`
+width: 90vw;
+padding: 0 5vw;
+height: 3rem;
+overflow-x: auto;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+scrollbar-width: none;
+`;
+
+const CategoryItem = styled.div`
+width: max-content;
+white-space: nowrap;
+height: 1.8rem;
+padding: 0rem 1rem;
+border-radius: 1rem;
+background-color: var(--gray-000);
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--gray-500);
+font-size: 0.8rem;
+margin-right: 0.5rem;
+`;
+
+
 export default function SearchCategory({style}) {
     const categories = [
         {
@@ -24,35 +53,6 @@ export default function SearchCategory({style}) {
             color: "var(--green)"
         }
     ];
-    const CategoryContainer = styled.div`
-    width: 90vw;
-    padding: 0 5vw;
-    height: 3rem;
-    overflow-x: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    scrollbar-width: none;
-    `;
-
-    const CategoryItem = styled.div`
-    width: max-content;
-    white-space: nowrap;
-    height: 1.8rem;
-    padding: 0rem 1rem;
-    border-radius: 1rem;
-    background-color: var(--gray-000);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gray-500);
-    font-size: 0.8rem;
-    margin-right: 0.5rem;
-    `;
-    
-    
     return (
         <span style={style}>
             <CategoryContainer>
