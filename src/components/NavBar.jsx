@@ -1,24 +1,29 @@
 
-import styled from "@emotion/styled";
 import React, { useState } from "react";
 import "./NavBar.css";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  // A navbar layout
   const [selected, setSelected] = useState("home");
+  const navigate = useNavigate();
+
+  const clickIcon = (name) => {
+    setSelected(name);
+    navigate(`/${name}`);
+  };
 
   const btns = {
     "search": {
       icon: "fas fa-search",
-      callback: () => setSelected("search")
+      callback: () => clickIcon("search")
     },
     "home": {
       icon: "fas fa-home",
-      callback: () => setSelected("home")
+      callback: () => clickIcon("home")
     },
     "profile": {
       icon: "fas fa-user",
-      callback: () => setSelected("profile")
+      callback: () => clickIcon("profile")
     }
   }
 
