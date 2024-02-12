@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Define Color Theme */
+:root {
+  --pink-100: #fff1f2;
+  --pink-200: #ffe4e6;
+  --pink-300: #fecdd3;
+  --pink-400: #fda4af;
+  --pink-500: #fb7185;
+  --pink-600: #f43f5e;
+
+  --gray-000: #ffffff;
+  --gray-100: #ffe4e6;
+  --gray-200: #a8a29e;
+  --gray-300: #575342;
+  --gray-400: #292524;
+  --gray-500: #0c0a09;
+  
+  --purple: #d946ef;
+  --orange: #f97316;
+  --yellow: #fbbf24;
+  --green: #4ade80;
+}
