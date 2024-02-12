@@ -1,14 +1,26 @@
 
 import styled from "@emotion/styled";
 import logo from "../assets/logo.png";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Splash() {
-  // A blank screen with a logo in the middle
+export default function SplashScreen() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/home');
+    }, 2000);
+  }, []);
   const Container = styled.div`
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: var(--pink-600);
   `;
   const Logo = styled.div`
