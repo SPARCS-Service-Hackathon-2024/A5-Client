@@ -1,10 +1,11 @@
 
 import React, { useState } from "react";
-import "./NavBar.css";
-import { useNavigate } from "react-router-dom";
+import "../style/NavBar.css";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function NavBar() {
-  const [selected, setSelected] = useState("home");
+  const location = useLocation();
+  const [selected, setSelected] = useState(location.pathname.split("/")[1]);
   const navigate = useNavigate();
 
   const clickIcon = (name) => {
