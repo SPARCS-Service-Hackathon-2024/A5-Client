@@ -99,6 +99,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# npm install tailwind말곤 안함
-# github 연결, branch
-package-lock.json
