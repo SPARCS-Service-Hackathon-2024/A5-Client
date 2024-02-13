@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const PanelContainer = styled.div`
   position: absolute;
