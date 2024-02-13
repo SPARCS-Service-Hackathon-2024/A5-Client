@@ -1,6 +1,6 @@
-import logo from "../assets/logo.png";
 import styled from "styled-components";
 import { useState } from "react";
+import gachiGayu from "../assets/gachi_gayu.svg";
 
 const SearchContainer = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const SearchBox = styled.div`
 const AppIcon = styled.div`
   width: 2rem;
   height: 2rem;
-  background-image: url(${logo});
+  background-image: url(${gachiGayu});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import logo from "../assets/logo.png";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import gachiGayu from "../assets/gachi_gayu.svg";
 
 const Container = styled.div`
   display: flex;
@@ -20,8 +20,8 @@ const Logo = styled.div`
   width: 240px;
   height: 240px;
   background-color: var(--gray-000);
-  -webkit-mask: url("${logo}") no-repeat center / contain;
-  mask: url(${logo}) no-repeat center / contain;
+  -webkit-mask: url("${gachiGayu}") no-repeat center / contain;
+  mask: url(${gachiGayu}) no-repeat center / contain;
 `;
 
 export default function SplashScreen() {
@@ -33,7 +33,7 @@ export default function SplashScreen() {
   }, []);
   return (
     <Container>
-      <Logo src={logo} />
+      <Logo src={gachiGayu} />
     </Container>
   );
 }
