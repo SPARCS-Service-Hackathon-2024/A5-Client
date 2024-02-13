@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import KakaoMap from "./KakaoMap";
 import SearchBar from "./SearchBar";
 import SearchCategory from "./SearchCategory";
+import SearchPanel from "./SearchPanel";
 
 const MapContainer = styled.div`
 position: absolute;
@@ -30,6 +31,7 @@ export default function SearchPage() {
                 transform: "translateX(-50%)",
                 zIndex: 10
             }} />
+            <SearchPanel />
         </MapContainer>
     );
 }

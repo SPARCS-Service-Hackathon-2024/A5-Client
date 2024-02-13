@@ -16,8 +16,8 @@ scrollbar-width: none;
 const CategoryItem = styled.div`
 width: max-content;
 white-space: nowrap;
-height: 1.8rem;
-padding: 0rem 1rem;
+height: 2rem;
+padding: 0rem 0.8rem;
 border-radius: 1rem;
 background-color: var(--gray-000);
 filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
