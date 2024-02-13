@@ -1,7 +1,7 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { FaRegCheckCircle, FaInfoCircle } from "react-icons/fa";
 import Fade from "@mui/material/Fade";
-import { toastState, toastShowState } from "../../store/Toast";
+import { toastState, toastShowState } from "../../store/toast";
 import styled from "styled-components";
 import { useEffect } from "react";
 
