@@ -1,0 +1,15 @@
+{
+  "name": "my place",
+  "items": [
+    {
+      "location": "아름다운동행서유성노인복지센터",
+      "address": "대전광역시 유성구 금남구즉로 1234",
+      "type": "errand"
+    },
+    {
+      "location": "대전광역시 동물보호센터",
+      "address": "대전광역시 유성구 금남구즉로 2234",
+      "type": "pet"
+    }
+  ]
+}
