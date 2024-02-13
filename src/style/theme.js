@@ -8,8 +8,6 @@ export const theme = {
     secondPink: "#FB7185",
     lightGray: "#cfcfcf",
     darkGray: "#3e3e3e",
-    red: "#ff3737",
-    green: "#50C878",
   },
   device: {
     mobile: "max-width: 620px",
@@ -39,7 +37,8 @@ export const muiTheme = createTheme({
 
 export const GlobalStyle = createGlobalStyle`
   html {
-    color: black;
+    background-color: ${theme.color.black};
+    color: white;
   }
   @media screen and (${theme.device.mobile}) {
     html {

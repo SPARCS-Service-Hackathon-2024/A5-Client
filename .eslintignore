@@ -4,4 +4,3 @@ node_modules/*
 **/index.html
 **/assets/*.html
 index.js
-reportWebVitals.js
