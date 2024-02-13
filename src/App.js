@@ -1,25 +1,29 @@
-import logo from "./logo.svg";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { GlobalStyle, muiTheme, theme } from "./style/theme";
+import { ThemeProvider } from "styled-components";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material";
+import Layout from "./components/layout/layout";
+import ToastMessage from "./components/common/toastMessage";
+import ModalRenderer from "./components/layout/modalRenderer";
 import "./App.css";
-import SocialKakao from "./components/kakaoOauth";
-
+import MapPage from "./pages/mapPage";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          <SocialKakao />
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={theme}>
+        <MuiThemeProvider theme={muiTheme}>
+          <GlobalStyle />
+          <BrowserRouter>
+            <ToastMessage />
+            <ModalRenderer />
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<MapPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </MuiThemeProvider>
+      </ThemeProvider>
     </div>
   );
 }
