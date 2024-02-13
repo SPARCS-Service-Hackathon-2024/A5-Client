@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "../style/NavBar.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -14,19 +13,19 @@ export default function NavBar() {
   };
 
   const btns = {
-    "search": {
+    search: {
       icon: "fas fa-search",
-      callback: () => clickIcon("search")
+      callback: () => clickIcon("search"),
     },
-    "home": {
+    home: {
       icon: "fas fa-home",
-      callback: () => clickIcon("home")
+      callback: () => clickIcon("home"),
     },
-    "profile": {
+    profile: {
       icon: "fas fa-user",
-      callback: () => clickIcon("profile")
-    }
-  }
+      callback: () => clickIcon("profile"),
+    },
+  };
 
   return (
     <div className="navbar-container">

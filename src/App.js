@@ -1,4 +1,3 @@
-
 import "./App.css";
 import SplashScreen from "./components/SplashScreen";
 import HomePage from "./components/HomePage";
