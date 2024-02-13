@@ -29,7 +29,7 @@ const CategoryItem = styled.div`
   margin-right: 0.5rem;
 `;
 
-export default function SearchCategory({ style }) {
+export default function SearchCategory({ style, setMenu }) {
   const categories = [
     {
       name: "심부름",
@@ -60,6 +60,7 @@ export default function SearchCategory({ style }) {
             <i
               className={category.icon}
               style={{ marginRight: "0.5rem", color: category.color }}
+              onClick={() => setMenu(category.name)}
             ></i>
             {category.name}
           </CategoryItem>

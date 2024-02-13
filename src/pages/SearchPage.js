@@ -3,6 +3,8 @@ import KakaoMap from "../components/KakaoMap";
 import SearchBar from "../components/SearchBar";
 import SearchCategory from "../components/SearchCategory";
 import SearchPanel from "../components/SearchPanel";
+import { useRecoilState } from "recoil";
+import { sliderState } from "../store/map";
 
 const MapContainer = styled.div`
   position: absolute;
@@ -13,6 +15,7 @@ const MapContainer = styled.div`
 `;
 
 export default function SearchPage() {
+  const [menu, setMenu] = useRecoilState(sliderState);
   return (
     <MapContainer>
       <KakaoMap />
@@ -33,6 +36,7 @@ export default function SearchPage() {
           transform: "translateX(-50%)",
           zIndex: 10,
         }}
+        setMenu={setMenu}
       />
       <SearchPanel />
     </MapContainer>

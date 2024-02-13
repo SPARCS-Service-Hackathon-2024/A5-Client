@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
+import ListSlider from "./search/ListSlider";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -90,6 +91,7 @@ export default function SearchPanel() {
       >
         <DragBar onTouchStart={onTouchStart} />
         <PanelCategory></PanelCategory>
+        <ListSlider />
       </div>
     </PanelContainer>
   );
