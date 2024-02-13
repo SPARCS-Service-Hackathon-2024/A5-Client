@@ -2,14 +2,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalStyle, muiTheme, theme } from "./style/theme";
 import { ThemeProvider } from "styled-components";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
-import ToastMessage from "./components/common/toastMessage";
-import ModalRenderer from "./components/layout/modalRenderer";
+import ToastMessage from "./components/common/ToastMessage";
+import ModalRenderer from "./components/layout/ModalRenderer";
 import "./App.css";
 import SplashScreen from "./components/SplashScreen";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/HomePage";
 import NavBar from "./components/NavBar";
-import SearchPage from "./components/SearchPage";
-import MyPage from "./components/MyPage";
+import SearchPage from "./pages/SearchPage";
+import MyPage from "./pages/MyPage";
 function App() {
   return (
     <div className="App">

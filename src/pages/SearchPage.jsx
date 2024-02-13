@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import KakaoMap from "./KakaoMap";
-import SearchBar from "./SearchBar";
-import SearchCategory from "./SearchCategory";
-import SearchPanel from "./SearchPanel";
+import KakaoMap from "../components/KakaoMap";
+import SearchBar from "../components/SearchBar";
+import SearchCategory from "../components/SearchCategory";
+import SearchPanel from "../components/SearchPanel";
 
 const MapContainer = styled.div`
   position: absolute;
