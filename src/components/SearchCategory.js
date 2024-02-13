@@ -10,6 +10,7 @@ const CategoryContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   scrollbar-width: none;
+  cursor: pointer;
 `;
 
 const CategoryItem = styled.div`
