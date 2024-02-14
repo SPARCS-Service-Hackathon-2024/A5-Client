@@ -34,8 +34,8 @@ const RowSectionInnerContainer = styled.div`
   justify-content: space-between;
 `;
 const RowSection = styled.div`
-  width: 20rem;
-  height: 12rem;
+  width: 26rem;
+  height: 16rem;
   background-color: var(${(props) => props.color || "--gray-000"});
   border-radius: 1rem;
   margin-left: 2rem;
