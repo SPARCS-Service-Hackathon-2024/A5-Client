@@ -37,32 +37,22 @@ export default function KakaoMap() {
 
   const [mapState, setMapState] = useRecoilState(mapStateRecoil);
 
-  const setLoading = (loading) => {
-    setMapState((prev) => ({ ...prev, loading }));
-  };
-
-  const setLocked = (locked) => {
-    setMapState((prev) => ({ ...prev, locked }));
-  };
-
   const { loading, locked } = mapState;
 
-  const [display_path, setDisplayPath] = useRecoilState(pathState);
+  const [path, _] = useRecoilState(pathState);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (window.kakao) {
         const container = mapContainerRef.current;
         const options = {
-          center: new window.kakao.maps.LatLng(
-            36.376626341108,
-            127.38719915966
-          ),
+          center: new window.kakao.maps.LatLng(36.3766263411, 127.38719915966),
           level: 3,
         };
+        setMapState((prev) => ({ ...prev, center: options.center }));
         const newMap = new window.kakao.maps.Map(container, options);
         mapRef.current = newMap;
-        setLoading(false);
+        setMapState((prev) => ({ ...prev, loading: false }));
         clearInterval(interval);
       }
     }, 100);
@@ -93,9 +83,7 @@ export default function KakaoMap() {
     currentLocationOverlay.setMap(map);
     currentLocationOverlayRef.current = currentLocationOverlay;
     var path3 = new window.kakao.maps.Polyline({
-      path: display_path.map(
-        (pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)
-      ),
+      path: path.map((pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)),
       strokeWeight: 13,
       strokeColor: "var(--gray-400)",
       strokeOpacity: 0.2,
@@ -104,9 +92,7 @@ export default function KakaoMap() {
     path3.setMap(map);
 
     var path1 = new window.kakao.maps.Polyline({
-      path: display_path.map(
-        (pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)
-      ),
+      path: path.map((pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)),
       strokeWeight: 10,
       strokeColor: "var(--gray-000)",
       strokeOpacity: 1.0,
@@ -115,9 +101,7 @@ export default function KakaoMap() {
     path1.setMap(map);
 
     var path2 = new window.kakao.maps.Polyline({
-      path: display_path.map(
-        (pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)
-      ),
+      path: path.map((pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)),
       strokeWeight: 5,
       strokeColor: "var(--pink-600)",
       strokeOpacity: 1,
@@ -133,17 +117,19 @@ export default function KakaoMap() {
     if (locked) {
       map.panTo(new window.kakao.maps.LatLng(location.lat, location.lng));
     }
-    currentLocationOverlayRef.current.setPosition(
-      new window.kakao.maps.LatLng(location.lat, location.lng)
-    );
+    if (currentLocationOverlayRef.current) {
+      currentLocationOverlayRef.current.setPosition(
+        new window.kakao.maps.LatLng(location.lat, location.lng)
+      );
+    }
   }, [loading, location.lat, location.lng, locked]);
 
   const lock = () => {
-    setLocked(true);
+    setMapState((prev) => ({ ...prev, locked: true }));
   };
 
   const unlock = () => {
-    setLocked(false);
+    setMapState((prev) => ({ ...prev, locked: false }));
   };
 
   return (
