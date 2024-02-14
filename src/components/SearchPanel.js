@@ -59,7 +59,7 @@ export default function SearchPanel() {
     const y = ((touch.clientY - 18) / window.innerHeight) * 100;
     const currentPanelPos = (y - panelTop) / (100 - panelTop - panelBottom);
     if (currentPanelPos >= 0 && currentPanelPos <= 1) {
-      console.log("move", currentPanelPos);
+      console.log("move", panelPos * (100 - panelTop - panelBottom) + panelTop);
       setPanelPos(currentPanelPos);
       panelPosRef.current = currentPanelPos;
     }
@@ -104,7 +104,12 @@ export default function SearchPanel() {
         <PanelCategory>
           <div>{menu !== "주변 산책로" && menu.concat(", 가치가유!")}</div>
         </PanelCategory>
-        <ListSlider />
+        <ListSlider
+          ref={panelRef}
+          style={{
+            height: `${100 - 0.5 * (100 - panelTop - panelBottom) - panelBottom - 20}vh`,
+          }}
+        />
       </div>
     </PanelContainer>
   );
