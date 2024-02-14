@@ -1,12 +1,12 @@
 import { useState } from "react";
 import SliderListItem from "./SliderListItem";
 import { useEffect } from "react";
+import aroundWalkPath from "../../dummyData/aroundWalkPath.json";
 
 const ListSlider = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    const aroundWalkPath = require("../../dummyData/aroundWalkPath.json");
-    setData(aroundWalkPath.items);
+    setData(aroundWalkPath.promenades);
   }, []);
   return (
     <div>

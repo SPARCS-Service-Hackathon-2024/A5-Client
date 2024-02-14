@@ -31,18 +31,6 @@ const ListContainer = styled.div`
   }
 `;
 
-// {
-//   "id": 1,
-//   "title": "귀여운 강아지와 산책하기",
-//   "date": "2024-02-23T18:25:43.511Z",
-//   "state": "upcoming",
-//   "location": "대전광역시 동물보호센터",
-//   "distance": "142m 앞",
-//   "length": "538m",
-//   "time": "16분",
-//   "type": "pet"
-// },
-
 const StartButton = styled.div`
   color: white;
   background-color: ${({ theme }) => theme.color.gachiPink};
@@ -118,11 +106,11 @@ const SliderListItem = ({ data }) => {
   return (
     <ListWrapper onClick={() => changeToggle(data.id)}>
       <ListContainer>
-        {data.type === "walkTogether" ? (
+        {data.type === "WALK_TOGETHER" ? (
           <Pet />
-        ) : data.type === "errand" ? (
+        ) : data.type === "ERRAND" ? (
           <ShoppingBag />
-        ) : data.type === "guide" ? (
+        ) : data.type === "TOURISM" ? (
           <GuidePlace />
         ) : (
           <Garbage />
@@ -130,17 +118,17 @@ const SliderListItem = ({ data }) => {
         <ListContent>
           <TitleContainer>
             <div>{data.title}</div>
-            <div>{data.date.slice(11, 16)}</div>
+            <div>{data.start_at?.slice(11, 16)}</div>
           </TitleContainer>
           <Description>
-            <div>{data.location}</div>, &nbsp;
-            <div>{data.length}</div>&nbsp;
-            <div>{data.time}</div>
+            <div>{data.place}</div>, &nbsp;
+            <div>{data.length}m</div>&nbsp;
+            <div>{data.time}분</div>
           </Description>
         </ListContent>
         <LengthDiv>
           <Flag />
-          <div>{data.distance}</div>
+          <div>{data.distance}m 앞</div>
         </LengthDiv>
       </ListContainer>
       {data.id === toggleWalkPath && (
