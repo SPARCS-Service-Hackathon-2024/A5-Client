@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState, useImperativeHandle } from "react";
+import React, { useEffect, useRef } from "react";
 import watchLocation from "../hooks/watchLocation";
 import styled from "@emotion/styled";
 
 import { useRecoilState } from "recoil";
 import { mapState as mapStateRecoil } from "../store/map";
+import { pathState } from "../store/path";
 
 const CurrentLocationButton = styled.div`
   position: absolute;
@@ -46,11 +47,7 @@ export default function KakaoMap() {
 
   const { loading, locked } = mapState;
 
-  const display_path = [
-    { lat: 36.376626341108, lng: 127.38719915966 },
-    { lat: 36.376726298399, lng: 127.38710083028 },
-    { lat: 36.376700125842, lng: 127.38689307368 },
-  ];
+  const [display_path, setDisplayPath] = useRecoilState(pathState);
 
   useEffect(() => {
     const interval = setInterval(() => {

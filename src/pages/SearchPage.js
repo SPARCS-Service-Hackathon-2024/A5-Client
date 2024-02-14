@@ -4,8 +4,6 @@ import SearchBar from "../components/SearchBar";
 import SearchCategory from "../components/SearchCategory";
 import SearchPanel from "../components/SearchPanel";
 
-import { useRef } from "react";
-
 const MapContainer = styled.div`
   position: absolute;
   left: 0;
