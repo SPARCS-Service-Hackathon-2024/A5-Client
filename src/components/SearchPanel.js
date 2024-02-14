@@ -23,6 +23,8 @@ const DragBar = styled.div`
   height: 0.3rem;
   background-color: var(--gray-200);
   border-radius: 0.2rem;
+  border: 1rem solid var(--gray-000);
+  margin: -0.7rem;
   touch-action: none;
 `;
 
