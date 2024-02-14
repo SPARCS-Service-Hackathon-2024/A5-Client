@@ -6,8 +6,6 @@ import SearchPanel from "../components/SearchPanel";
 import { useRecoilState } from "recoil";
 import { sliderState } from "../store/map";
 
-import { useRef } from "react";
-
 const MapContainer = styled.div`
   position: absolute;
   left: 0;
