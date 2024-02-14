@@ -10,6 +10,8 @@ import HomePage from "./pages/HomePage";
 import NavBar from "./components/NavBar";
 import SearchPage from "./pages/SearchPage";
 import MyPage from "./pages/MyPage";
+import EditMyPage from "./pages/EditMyPage";
+
 function App() {
   return (
     <div className="App">
@@ -24,6 +26,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/profile" element={<MyPage />} />
+              <Route path="/edit" element={<EditMyPage />} />
             </Routes>
             <NavBar />
           </BrowserRouter>
