@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "./modal";
 
 const VerifyModal = ({ handleClose, onSubmit }) => {
   return (
