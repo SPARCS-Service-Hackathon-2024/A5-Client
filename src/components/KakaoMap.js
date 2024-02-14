@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState, useImperativeHandle } from "react";
 import watchLocation from "../hooks/watchLocation";
 import styled from "@emotion/styled";
 
+import { useRecoilState } from "recoil";
+import { mapState as mapStateRecoil } from "../store/map";
+
 const CurrentLocationButton = styled.div`
   position: absolute;
   top: 10rem;
@@ -27,10 +30,21 @@ const CurrentLocationButtonIcon = styled.i`
 
 export default function KakaoMap() {
   const mapRef = useRef(null);
-  const [map, setMap] = useState(null);
   const { location, error } = watchLocation();
-  const [lockedToLocation, setLockedToLocation] = useState(false);
   const currentLocationOverlayRef = useRef(null);
+  const mapContainerRef = useRef(null);
+
+  const [mapState, setMapState] = useRecoilState(mapStateRecoil);
+
+  const setLoading = (loading) => {
+    setMapState((prev) => ({ ...prev, loading }));
+  };
+
+  const setLocked = (locked) => {
+    setMapState((prev) => ({ ...prev, locked }));
+  };
+
+  const { loading, locked } = mapState;
 
   const display_path = [
     { lat: 36.376626341108, lng: 127.38719915966 },
@@ -39,15 +53,30 @@ export default function KakaoMap() {
   ];
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.kakao) {
+        const container = mapContainerRef.current;
+        const options = {
+          center: new window.kakao.maps.LatLng(
+            36.376626341108,
+            127.38719915966
+          ),
+          level: 3,
+        };
+        const newMap = new window.kakao.maps.Map(container, options);
+        mapRef.current = newMap;
+        setLoading(false);
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
     if (!mapRef.current) return;
     if (!window.kakao) return;
-    const container = mapRef.current;
-    const options = {
-      center: new window.kakao.maps.LatLng(36.376626341108, 127.38719915966),
-      level: 3,
-    };
-    const newMap = new window.kakao.maps.Map(container, options);
-    setMap(newMap);
+    const map = mapRef.current;
+    const container = mapContainerRef.current;
     var currentLocationOverlay = new window.kakao.maps.CustomOverlay({
       map: map,
       clickable: true,
@@ -64,9 +93,8 @@ export default function KakaoMap() {
       yAnchor: 1,
       zIndex: 3,
     });
-    currentLocationOverlay.setMap(newMap);
+    currentLocationOverlay.setMap(map);
     currentLocationOverlayRef.current = currentLocationOverlay;
-
     var path3 = new window.kakao.maps.Polyline({
       path: display_path.map(
         (pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)
@@ -76,7 +104,7 @@ export default function KakaoMap() {
       strokeOpacity: 0.2,
       strokeStyle: "solid",
     });
-    path3.setMap(newMap);
+    path3.setMap(map);
 
     var path1 = new window.kakao.maps.Polyline({
       path: display_path.map(
@@ -87,7 +115,7 @@ export default function KakaoMap() {
       strokeOpacity: 1.0,
       strokeStyle: "solid",
     });
-    path1.setMap(newMap);
+    path1.setMap(map);
 
     var path2 = new window.kakao.maps.Polyline({
       path: display_path.map(
@@ -98,26 +126,27 @@ export default function KakaoMap() {
       strokeOpacity: 1,
       strokeStyle: "solid",
     });
-    path2.setMap(newMap);
-  }, [mapRef]);
+    path2.setMap(map);
+  }, [loading]);
 
   useEffect(() => {
+    const map = mapRef.current;
     if (!map) return;
     if (!location.lat || !location.lng) return;
-    if (lockedToLocation) {
+    if (locked) {
       map.panTo(new window.kakao.maps.LatLng(location.lat, location.lng));
     }
     currentLocationOverlayRef.current.setPosition(
       new window.kakao.maps.LatLng(location.lat, location.lng)
     );
-  }, [map, location.lat, location.lng, lockedToLocation]);
+  }, [loading, location.lat, location.lng, locked]);
 
   const lock = () => {
-    setLockedToLocation(true);
+    setLocked(true);
   };
 
   const unlock = () => {
-    setLockedToLocation(false);
+    setLocked(false);
   };
 
   return (
@@ -125,11 +154,11 @@ export default function KakaoMap() {
       <CurrentLocationButton onClick={lock}>
         <CurrentLocationButtonIcon
           className={"fas fa-crosshairs"}
-          highlighted={lockedToLocation}
+          highlighted={locked}
         />
       </CurrentLocationButton>
       <div
-        ref={mapRef}
+        ref={mapContainerRef}
         style={{ width: "100%", height: "100%" }}
         onTouchStart={unlock}
       ></div>
