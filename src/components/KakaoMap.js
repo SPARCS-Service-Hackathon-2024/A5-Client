@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import watchLocation from "../hooks/watchLocation";
 import styled from "@emotion/styled";
 
@@ -32,22 +32,63 @@ const CurrentLocationButtonIcon = styled.i`
 export default function KakaoMap() {
   const mapRef = useRef(null);
   const { location, error } = watchLocation();
-  const currentLocationOverlayRef = useRef(null);
   const mapContainerRef = useRef(null);
 
   const [mapState, setMapState] = useRecoilState(mapStateRecoil);
 
   const { loading, locked } = mapState;
 
-  const [path, _] = useRecoilState(pathState);
+  const [path, setPath] = useRecoilState(pathState);
+
+  const currentLocationOverlay = useMemo(() => {
+    if (loading) return null;
+    if (!window.kakao) return null;
+    if (!mapRef.current) return null;
+    console.log("Creating current location overlay");
+    const pos = {
+      lat: 36.3766263411,
+      lng: 127.38719915966,
+    };
+    if (location.lat && location.lng) {
+      pos.lat = location.lat;
+      pos.lng = location.lng;
+    }
+    const res = new window.kakao.maps.CustomOverlay({
+      map: mapRef.current,
+      clickable: true,
+      content: `<div style='
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        background-color: var(--pink-600);
+        border: 0.25rem solid var(--gray-000);
+        transform: translate(-50%, -50%);
+        filter: drop-shadow(0.1rem 0.1rem 0.4rem rgba(0, 0, 0, 0.25));'>
+      </div>`,
+      position: new window.kakao.maps.LatLng(pos.lat, pos.lng),
+      xAnchor: 0,
+      yAnchor: 0,
+      zIndex: 3,
+    });
+    res.setMap(mapRef.current);
+    return res;
+  }, [loading]);
 
   useEffect(() => {
     setMapState((prev) => ({ ...prev, loading: true }));
     const interval = setInterval(() => {
       if (window.kakao) {
         const container = mapContainerRef.current;
+        const pos = {
+          lat: 36.3766263411,
+          lng: 127.38719915966,
+        };
+        if (location.lat && location.lng) {
+          pos.lat = location.lat;
+          pos.lng = location.lng;
+        }
         const options = {
-          center: new window.kakao.maps.LatLng(36.3766263411, 127.38719915966),
+          center: new window.kakao.maps.LatLng(pos.lat, pos.lng),
           level: 3,
         };
         setMapState((prev) => ({ ...prev, center: options.center }));
@@ -64,24 +105,6 @@ export default function KakaoMap() {
     if (!mapRef.current) return;
     if (!window.kakao) return;
     const map = mapRef.current;
-    var currentLocationOverlay = new window.kakao.maps.CustomOverlay({
-      map: map,
-      clickable: true,
-      content: `<div style='
-        width: 0.8rem;
-        height: 0.8rem;
-        border-radius: 50%;
-        background-color: var(--pink-600);
-        border: 0.25rem solid var(--gray-000);
-        filter: drop-shadow(0.1rem 0.1rem 0.4rem rgba(0, 0, 0, 0.25));'>
-      </div>`,
-      position: new window.kakao.maps.LatLng(36.376626341108, 127.38719915966),
-      xAnchor: 0.5,
-      yAnchor: 1,
-      zIndex: 3,
-    });
-    currentLocationOverlay.setMap(map);
-    currentLocationOverlayRef.current = currentLocationOverlay;
     var path3 = new window.kakao.maps.Polyline({
       path: path.map((pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)),
       strokeWeight: 13,
@@ -108,7 +131,12 @@ export default function KakaoMap() {
       strokeStyle: "solid",
     });
     path2.setMap(map);
-  }, [loading]);
+    return () => {
+      path1.setMap(null);
+      path2.setMap(null);
+      path3.setMap(null);
+    };
+  }, [loading, path]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -117,12 +145,20 @@ export default function KakaoMap() {
     if (locked) {
       map.panTo(new window.kakao.maps.LatLng(location.lat, location.lng));
     }
-    if (currentLocationOverlayRef.current) {
-      currentLocationOverlayRef.current.setPosition(
+    if (currentLocationOverlay) {
+      currentLocationOverlay.setPosition(
         new window.kakao.maps.LatLng(location.lat, location.lng)
       );
     }
   }, [loading, location.lat, location.lng, locked]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    if (!location.lat || !location.lng) return;
+    // Add path
+    setPath((prev) => [...prev, { lat: location.lat, lng: location.lng }]);
+  }, [location.lat, location.lng]);
 
   const lock = () => {
     setMapState((prev) => ({ ...prev, locked: true }));
