@@ -8,6 +8,7 @@ import { ReactComponent as Garbage } from "../../assets/garbage.svg";
 import VerifyModal from "../common/VerifyModal";
 import { useModal } from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
+import StartModal from "../common/StartModal";
 
 const ListWrapper = styled.div`
   cursor: pointer;
@@ -113,8 +114,22 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
     //TODO: unsave path api
     console.log(id, " unsaved");
   };
-  const goVerify = () => {
-    navigate("/verification");
+  const VerifyOrStart = () => {
+    //TODO: if verified
+    // openModal(VerifyModal, {
+    //   handleClose: closeModal,
+    //   onSubmit: () => {
+    //     navigate("/verification");
+    //   },
+    // });
+    //if not
+    openModal(StartModal, {
+      handleClose: closeModal,
+      onConfirm: () => {
+        navigate("/navigation");
+        closeModal;
+      },
+    });
   };
   return (
     <ListWrapper>
@@ -153,16 +168,7 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
           ) : (
             <SaveButton onClick={() => savePath(data.id)}>저장</SaveButton>
           )}
-          <StartButton
-            onClick={() =>
-              openModal(VerifyModal, {
-                handleClose: closeModal,
-                onSubmit: goVerify,
-              })
-            }
-          >
-            시작
-          </StartButton>
+          <StartButton onClick={() => VerifyOrStart()}>시작</StartButton>
         </ToggleContainer>
       )}
     </ListWrapper>
