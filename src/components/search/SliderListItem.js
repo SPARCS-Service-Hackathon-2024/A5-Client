@@ -5,6 +5,9 @@ import { ReactComponent as Pet } from "../../assets/pet.svg";
 import { ReactComponent as ShoppingBag } from "../../assets/shopping_bag.svg";
 import { ReactComponent as GuidePlace } from "../../assets/guide_location.svg";
 import { ReactComponent as Garbage } from "../../assets/garbage.svg";
+import VerifyModal from "../common/VerifyModal";
+import { useModal } from "../../hooks/useModal";
+import { useNavigate } from "react-router-dom";
 
 const ListWrapper = styled.div`
   cursor: pointer;
@@ -91,8 +94,10 @@ const Description = styled.div`
   color: gray;
   font-size: 0.75rem;
 `;
-
 const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
+  const { openModal, closeModal } = useModal();
+  const navigate = useNavigate();
+
   const changeToggle = (id) => {
     if (toggleWalkPath === id) {
       setToggleWalkPath(null);
@@ -107,6 +112,9 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
   const unSavePath = (id) => {
     //TODO: unsave path api
     console.log(id, " unsaved");
+  };
+  const goVerify = () => {
+    navigate("/verification");
   };
   return (
     <ListWrapper>
@@ -145,7 +153,16 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
           ) : (
             <SaveButton onClick={() => savePath(data.id)}>저장</SaveButton>
           )}
-          <StartButton>시작</StartButton>
+          <StartButton
+            onClick={() =>
+              openModal(VerifyModal, {
+                handleClose: closeModal,
+                onSubmit: goVerify,
+              })
+            }
+          >
+            시작
+          </StartButton>
         </ToggleContainer>
       )}
     </ListWrapper>
