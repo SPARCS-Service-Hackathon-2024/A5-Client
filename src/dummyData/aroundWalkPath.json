@@ -33,13 +33,12 @@
     {
       "id": 1,
       "title": "귀여운 강아지와 산책하기",
-      "started_at": "2024-02-23T18:25:43.511Z",
+      "start_at": "2024-02-23T16:25:43.511Z",
       "place": "대전광역시 동물보호센터",
       "distance": 142,
       "length": 538,
       "time": 16,
       "saved": false,
-
       "type": "WALK_TOGETHER",
       "location": {
         "latitude": "36.1234",
