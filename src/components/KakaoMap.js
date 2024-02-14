@@ -42,6 +42,7 @@ export default function KakaoMap() {
   const [path, _] = useRecoilState(pathState);
 
   useEffect(() => {
+    setMapState((prev) => ({ ...prev, loading: true }));
     const interval = setInterval(() => {
       if (window.kakao) {
         const container = mapContainerRef.current;
@@ -63,7 +64,6 @@ export default function KakaoMap() {
     if (!mapRef.current) return;
     if (!window.kakao) return;
     const map = mapRef.current;
-    const container = mapContainerRef.current;
     var currentLocationOverlay = new window.kakao.maps.CustomOverlay({
       map: map,
       clickable: true,
