@@ -62,17 +62,19 @@ export default function SearchCategory({ style }) {
     <span style={style}>
       <CategoryContainer>
         {categories.map((category, index) => (
-          <CategoryItem key={index}>
+          <CategoryItem
+            key={index}
+            onClick={() => {
+              setMenuState(() =>
+                menu === category.name
+                  ? { menu: "주변 산책로" }
+                  : { menu: category.name }
+              );
+            }}
+          >
             <i
               className={category.icon}
               style={{ marginRight: "0.5rem", color: category.color }}
-              onClick={() =>
-                setMenuState(() =>
-                  menu === category.name
-                    ? { menu: "주변 산책로" }
-                    : { menu: category.name }
-                )
-              }
             ></i>
             {category.name}
           </CategoryItem>
