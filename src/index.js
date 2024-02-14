@@ -5,12 +5,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot, RecoilEnv } from "recoil";
 RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
+import GlobalStyle from "./GlobalStyle";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RecoilRoot>
       <App />
+      <GlobalStyle />
     </RecoilRoot>
   </React.StrictMode>
 );
