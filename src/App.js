@@ -11,6 +11,8 @@ import NavBar from "./components/NavBar";
 import SearchPage from "./pages/SearchPage";
 import MyPage from "./pages/MyPage";
 import EditMyPage from "./pages/EditMyPage";
+import NavigationPage from "./pages/NavigationPage";
+import VerifyPage from "./pages/VerifyPage";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/profile" element={<MyPage />} />
+              <Route path="/navigation" element={<NavigationPage />} />
+              <Route path="/verification" element={<VerifyPage />} />
               <Route path="/edit" element={<EditMyPage />} />
             </Routes>
             <NavBar />
