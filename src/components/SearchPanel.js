@@ -32,6 +32,14 @@ const PanelCategory = styled.div`
   height: 5rem;
   background-color: var(--gray-000);
   border-bottom: 0.18rem solid var(--gray-100);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  > div {
+    padding-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
 `;
 
 const panelTop = 18; // vh
@@ -90,7 +98,9 @@ export default function SearchPanel() {
         }}
       >
         <DragBar onTouchStart={onTouchStart} />
-        <PanelCategory></PanelCategory>
+        <PanelCategory>
+          <div>관광해설, 가치가유!</div>
+        </PanelCategory>
         <ListSlider />
       </div>
     </PanelContainer>

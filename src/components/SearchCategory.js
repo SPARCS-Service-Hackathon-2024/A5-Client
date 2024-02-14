@@ -37,7 +37,7 @@ export default function SearchCategory({ style, setMenu }) {
       color: "var(--yellow)",
     },
     {
-      name: "유기견 산책",
+      name: "함께 걷기",
       icon: "fas fa-dog",
       color: "var(--purple)",
     },

@@ -118,7 +118,7 @@ const SliderListItem = ({ data }) => {
   return (
     <ListWrapper onClick={() => changeToggle(data.id)}>
       <ListContainer>
-        {data.type === "pet" ? (
+        {data.type === "walkTogether" ? (
           <Pet />
         ) : data.type === "errand" ? (
           <ShoppingBag />
