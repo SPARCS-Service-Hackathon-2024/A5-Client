@@ -54,6 +54,7 @@ const SearchButton = styled.div`
   justify-content: center;
   color: var(--gray-000);
   font-size: 1.5rem;
+  cursor: pointer;
 `;
 
 export default function SearchBar({ style }) {

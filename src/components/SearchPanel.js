@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ListSlider from "./search/ListSlider";
+import { useRecoilValue } from "recoil";
+import { sliderState } from "../store/map";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -33,12 +36,21 @@ const PanelCategory = styled.div`
   height: 5rem;
   background-color: var(--gray-000);
   border-bottom: 0.18rem solid var(--gray-100);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  > div {
+    padding-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
 `;
 
 const panelTop = 18; // vh
 const panelBottom = 13; // vh
 export default function SearchPanel() {
   const panelRef = useRef(null);
+  const { menu } = useRecoilValue(sliderState);
 
   const [panelPos, setPanelPos] = useState(1); // 0 ~ 1
   const panelPosRef = useRef(panelPos);
@@ -49,7 +61,7 @@ export default function SearchPanel() {
     const y = ((touch.clientY - 18) / window.innerHeight) * 100;
     const currentPanelPos = (y - panelTop) / (100 - panelTop - panelBottom);
     if (currentPanelPos >= 0 && currentPanelPos <= 1) {
-      console.log("move", currentPanelPos);
+      console.log("move", panelPos * (100 - panelTop - panelBottom) + panelTop);
       setPanelPos(currentPanelPos);
       panelPosRef.current = currentPanelPos;
     }
@@ -91,7 +103,15 @@ export default function SearchPanel() {
         }}
       >
         <DragBar onTouchStart={onTouchStart} />
-        <PanelCategory></PanelCategory>
+        <PanelCategory>
+          <div>{menu !== "주변 산책로" && menu.concat(", 가치가유!")}</div>
+        </PanelCategory>
+        <ListSlider
+          ref={panelRef}
+          style={{
+            height: `${100 - 0.5 * (100 - panelTop - panelBottom) - panelBottom - 20}vh`,
+          }}
+        />
       </div>
     </PanelContainer>
   );

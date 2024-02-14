@@ -3,6 +3,8 @@ import KakaoMap from "../components/KakaoMap";
 import SearchBar from "../components/SearchBar";
 import SearchCategory from "../components/SearchCategory";
 import SearchPanel from "../components/SearchPanel";
+import { useRecoilState } from "recoil";
+import { sliderState } from "../store/map";
 
 const MapContainer = styled.div`
   position: absolute;

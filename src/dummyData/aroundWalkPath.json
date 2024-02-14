@@ -1,0 +1,80 @@
+{
+  "promenades": [
+    {
+      "id": 12,
+      "title": "말티즈와 산책하기",
+      "place": "대전광역시 동물보호센터",
+      "start_at": "2024-02-23T18:00:00.000000",
+      "distance": 142,
+      "length": 1200,
+      "time": 30,
+      "type": "WALK_TOGETHER",
+      "saved": true,
+      "location": {
+        "latitude": "36.12341",
+        "longitude": "127.234"
+      }
+    },
+    {
+      "id": 17,
+      "title": "힐링 족욕체험장 해설하기",
+      "place": "유성온천 야외 족욕체험장",
+      "start_at": "2024-02-23T13:30:00.000000",
+      "distance": 253,
+      "length": 532,
+      "time": 13,
+      "saved": true,
+      "type": "TOURISM",
+      "location": {
+        "latitude": "36.1264",
+        "longitude": "127.1234"
+      }
+    },
+    {
+      "id": 1,
+      "title": "귀여운 강아지와 산책하기",
+      "started_at": "2024-02-23T18:25:43.511Z",
+      "place": "대전광역시 동물보호센터",
+      "distance": 142,
+      "length": 538,
+      "time": 16,
+      "saved": false,
+
+      "type": "WALK_TOGETHER",
+      "location": {
+        "latitude": "36.1234",
+        "longitude": "127.434"
+      }
+    },
+    {
+      "id": 2,
+      "title": "심부름 봉사하기",
+      "start_at": "2024-03-23T18:25:43.511Z",
+      "place": "아름다운동행서유성노인복지센터",
+      "distance": 200,
+      "length": 521,
+      "time": 15,
+      "saved": false,
+      "type": "ERRAND",
+      "location": {
+        "latitude": "36.1204",
+        "longitude": "127.01234"
+      }
+    },
+    {
+      "id": 3,
+      "title": "관광지 투어하기",
+      "start_at": "2024-02-21T18:25:43.511Z",
+      "place": "국립중앙과학관",
+      "distance": 204,
+      "length": 721,
+      "time": 25,
+      "saved": false,
+      "type": "TOURISM",
+      "location": {
+        "latitude": "36.11204",
+        "longitude": "127.001234"
+      }
+    }
+  ]
+}

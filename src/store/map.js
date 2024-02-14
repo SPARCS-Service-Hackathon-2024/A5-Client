@@ -19,3 +19,10 @@ export const addressInputState = atom({
   key: "addressInputState",
   default: "",
 });
+
+export const sliderState = atom({
+  key: "sliderState",
+  default: {
+    menu: "주변 산책로",
+  },
+});

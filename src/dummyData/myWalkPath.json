@@ -1,0 +1,27 @@
+{
+  "name": "my walk path",
+  "items": [
+    {
+      "id": 1,
+      "title": "심부름 봉사하기",
+      "date": "2024-03-23T18:25:43.511Z",
+      "state": "upcoming",
+      "location": "아름다운동행서유성노인복지센터",
+      "distance": "200m 앞",
+      "length": "521m",
+      "time": "15분",
+      "type": "ERRAND"
+    },
+    {
+      "id": 2,
+      "title": "관광지 투어하기",
+      "date": "2024-02-11T18:25:43.511Z",
+      "state": "finished",
+      "location": "국립중앙과학관",
+      "distance": "204m 앞",
+      "length": "721m",
+      "time": "25분",
+      "type": "guide"
+    }
+  ]
+}

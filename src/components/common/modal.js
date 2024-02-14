@@ -1,5 +1,5 @@
 import Dialog from "@mui/material/Dialog";
-import { useModal } from "../hooks/UseModal";
+import { useModal } from "../../hooks/useModal";
 import { FaTimes } from "react-icons/fa";
 import styled from "styled-components";
 
