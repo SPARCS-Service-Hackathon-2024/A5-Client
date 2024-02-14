@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import ListSlider from "./search/ListSlider";
+import { useRecoilValue } from "recoil";
+import { sliderState } from "../store/map";
 
 const PanelContainer = styled.div`
   position: absolute;
@@ -46,6 +48,7 @@ const panelTop = 18; // vh
 const panelBottom = 13; // vh
 export default function SearchPanel() {
   const panelRef = useRef(null);
+  const { menu } = useRecoilValue(sliderState);
 
   const [panelPos, setPanelPos] = useState(1); // 0 ~ 1
   const panelPosRef = useRef(panelPos);
@@ -99,7 +102,7 @@ export default function SearchPanel() {
       >
         <DragBar onTouchStart={onTouchStart} />
         <PanelCategory>
-          <div>관광해설, 가치가유!</div>
+          <div>{menu !== "주변 산책로" && menu.concat(", 가치가유!")}</div>
         </PanelCategory>
         <ListSlider />
       </div>

@@ -17,7 +17,6 @@ const MapContainer = styled.div`
 `;
 
 export default function SearchPage() {
-  const [menu, setMenu] = useRecoilState(sliderState);
   return (
     <MapContainer>
       <KakaoMap />
@@ -38,7 +37,6 @@ export default function SearchPage() {
           transform: "translateX(-50%)",
           zIndex: 10,
         }}
-        setMenu={setMenu}
       />
       <SearchPanel />
     </MapContainer>

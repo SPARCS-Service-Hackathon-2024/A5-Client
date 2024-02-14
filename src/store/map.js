@@ -21,5 +21,7 @@ export const addressInputState = atom({
 
 export const sliderState = atom({
   key: "sliderState",
-  default: "all",
+  default: {
+    menu: "주변 산책로",
+  },
 });

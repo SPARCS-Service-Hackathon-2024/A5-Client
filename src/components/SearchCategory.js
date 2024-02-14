@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+import { useSetRecoilState } from "recoil";
+import { sliderState } from "../store/map";
+import { useRecoilValue } from "recoil";
 
 const CategoryContainer = styled.div`
   width: 90vw;
@@ -29,7 +32,10 @@ const CategoryItem = styled.div`
   margin-right: 0.5rem;
 `;
 
-export default function SearchCategory({ style, setMenu }) {
+export default function SearchCategory({ style }) {
+  const setMenuState = useSetRecoilState(sliderState);
+  const { menu } = useRecoilValue(sliderState);
+
   const categories = [
     {
       name: "심부름",
@@ -60,7 +66,13 @@ export default function SearchCategory({ style, setMenu }) {
             <i
               className={category.icon}
               style={{ marginRight: "0.5rem", color: category.color }}
-              onClick={() => setMenu(category.name)}
+              onClick={() =>
+                setMenuState(() =>
+                  menu === category.name
+                    ? { menu: "주변 산책로" }
+                    : { menu: category.name }
+                )
+              }
             ></i>
             {category.name}
           </CategoryItem>
