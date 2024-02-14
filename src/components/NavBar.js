@@ -4,11 +4,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export default function NavBar() {
   const location = useLocation();
-  const [selected, setSelected] = useState(location.pathname.split("/")[1]);
+  const selected = location.pathname.split("/")[1];
   const navigate = useNavigate();
 
   const clickIcon = (name) => {
-    setSelected(name);
     navigate(`/${name}`);
   };
 
