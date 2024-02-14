@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 
-import screenshot from "../Screenshot2.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,10 +14,6 @@ const Container = styled.div`
   left: 0;
   z-index: 100;
   background-color: var(--gray-000);
-  /* background-image: url(${screenshot});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center; */
 `;
 
 const MyPageTitle = styled.div`

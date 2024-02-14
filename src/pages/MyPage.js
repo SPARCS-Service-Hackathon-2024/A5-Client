@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 
-import screenshot from "../SCREENSHOT.png";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -9,10 +8,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   font-family: Pretendard;
-  /* background-image: url(${screenshot});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center; */
 `;
 
 const MyPageTitle = styled.div`
