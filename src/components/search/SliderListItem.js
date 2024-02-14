@@ -13,12 +13,6 @@ const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid lightgray;
-  /* > hr {
-    border: 0;
-    width: 90%;
-    background-color: gray;
-    color: lightgray;
-  } */
 `;
 
 const ListContainer = styled.div`
@@ -38,6 +32,10 @@ const StartButton = styled.div`
 const SaveButton = styled.div`
   color: ${({ theme }) => theme.color.gachiPink};
   background-color: white;
+`;
+const SavedButton = styled.div`
+  color: ${({ theme }) => theme.color.gachiPink};
+  background-color: #fff1f2;
 `;
 
 const ToggleContainer = styled.div`
@@ -94,8 +92,7 @@ const Description = styled.div`
   font-size: 0.75rem;
 `;
 
-const SliderListItem = ({ data }) => {
-  const [toggleWalkPath, setToggleWalkPath] = useState(null);
+const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
   const changeToggle = (id) => {
     if (toggleWalkPath === id) {
       setToggleWalkPath(null);
@@ -103,9 +100,17 @@ const SliderListItem = ({ data }) => {
       setToggleWalkPath(id);
     }
   };
+  const savePath = (id) => {
+    //TODO: save path api
+    console.log(id, " saved");
+  };
+  const unSavePath = (id) => {
+    //TODO: unsave path api
+    console.log(id, " unsaved");
+  };
   return (
-    <ListWrapper onClick={() => changeToggle(data.id)}>
-      <ListContainer>
+    <ListWrapper>
+      <ListContainer onClick={() => changeToggle(data.id)}>
         {data.type === "WALK_TOGETHER" ? (
           <Pet />
         ) : data.type === "ERRAND" ? (
@@ -133,11 +138,16 @@ const SliderListItem = ({ data }) => {
       </ListContainer>
       {data.id === toggleWalkPath && (
         <ToggleContainer>
-          <SaveButton>저장</SaveButton>
+          {data.saved ? (
+            <SavedButton onClick={() => unSavePath(data.id)}>
+              저장됨
+            </SavedButton>
+          ) : (
+            <SaveButton onClick={() => savePath(data.id)}>저장</SaveButton>
+          )}
           <StartButton>시작</StartButton>
         </ToggleContainer>
       )}
-      {/* <hr></hr> */}
     </ListWrapper>
   );
 };
