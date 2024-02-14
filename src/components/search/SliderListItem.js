@@ -120,6 +120,7 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
     //   handleClose: closeModal,
     //   onSubmit: () => {
     //     navigate("/verification");
+    // closeModal();
     //   },
     // });
     //if not
@@ -127,7 +128,7 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
       handleClose: closeModal,
       onConfirm: () => {
         navigate("/navigation");
-        closeModal;
+        closeModal();
       },
     });
   };
