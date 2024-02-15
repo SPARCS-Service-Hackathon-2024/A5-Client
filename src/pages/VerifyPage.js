@@ -1,13 +1,19 @@
 import Footer from "../components/common/Footer";
 import styled from "styled-components";
-import { ReactComponent as GrayBox } from "../assets/guide/tour_guide_1_gray.svg";
-import { ReactComponent as VerticalBox } from "../assets/guide/tour_guide_1_vertical.svg";
-import { ReactComponent as Reflection } from "../assets/guide/tour_guide_1_reflection.svg";
+import { ReactComponent as Vertical } from "../assets/photo_vertical.svg";
+import { ReactComponent as Dark } from "../assets/photo_dark.svg";
+import { ReactComponent as Reflection } from "../assets/photo_reflection.svg";
+import { ReactComponent as AutoTake } from "../assets/auto_photo_par.svg";
 
 const VerifyContainer = styled.div`
   background-color: black;
 
   height: 100vh;
+  > div:first-child {
+    display: flex;
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+  }
   > ul {
     color: white;
     margin-bottom: 8rem;
@@ -21,9 +27,13 @@ const VerifyContainer = styled.div`
 const IconContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: fixed;
-  margin-top: 10rem;
   right: 0;
+  > svg {
+    margin: 1rem 0;
+    opacity: 0.8;
+  }
 `;
 
 export default function VerifyPage() {
@@ -32,9 +42,12 @@ export default function VerifyPage() {
   };
   return (
     <VerifyContainer>
+      <div>
+        <AutoTake />
+      </div>
       <IconContainer>
-        <GrayBox />
-        <VerticalBox />
+        <Vertical />
+        <Dark />
         <Reflection />
       </IconContainer>
       <ul>
