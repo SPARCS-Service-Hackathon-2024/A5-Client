@@ -9,6 +9,7 @@ import SearchBar from "../components/SearchBar";
 import SearchCategory from "../components/SearchCategory";
 import SearchPanel from "../components/SearchPanel";
 import watchLocation from "../hooks/watchLocation";
+import { useNavigate } from "react-router-dom";
 
 const MapContainer = styled.div`
   position: absolute;
@@ -38,7 +39,7 @@ function degreesToRadians(degrees) {
 }
 
 export default function NavigationPage() {
-  const isNavigating = useState(false);
+  const navigate = useNavigate();
   const pathData = [
     {
       pos: { lat: 36.376626341108, lng: 127.38719915966 },
@@ -67,18 +68,14 @@ export default function NavigationPage() {
   ];
   const [cPosIndex, setCPosIndex] = useState(0);
   const [path, setPath] = useRecoilState(pathState);
+  const [doneDelay, setDoneDelay] = useState(null);
 
   const { location } = watchLocation();
 
   const threshold = 0.01; // 10m
 
   useEffect(() => {
-    const distance_current_path = calculateDistance(
-      pathData[cPosIndex].pos.lat,
-      pathData[cPosIndex].pos.lng,
-      pathData[cPosIndex + 1].pos.lat,
-      pathData[cPosIndex + 1].pos.lng
-    );
+    if (doneDelay) return;
     const distance_current_user = calculateDistance(
       location.lat,
       location.lng,
@@ -87,6 +84,16 @@ export default function NavigationPage() {
     );
 
     if (distance_current_user < threshold) {
+      if (cPosIndex === pathData.length - 2) {
+        setDoneDelay(5);
+        setTimeout(() => {
+          navigate("/check-photo");
+        }, 5000);
+        const interval = setInterval(() => {
+          setDoneDelay((prev) => prev - 1);
+          return () => clearInterval(interval);
+        }, 1000);
+      }
       setCPosIndex((prev) => prev + 1);
     }
   }, [location.lat, location.lng]);
@@ -97,6 +104,16 @@ export default function NavigationPage() {
       ...pathData.slice(cPosIndex + 1).map((p) => p.pos),
     ]);
   }, [cPosIndex, location.lat, location.lng]);
+
+  const msgData =
+    cPosIndex < pathData.length - 1
+      ? pathData[cPosIndex]
+      : {
+          pos: { lat: location.lat, lng: location.lng },
+          main_desc: "인증사진 촬영하기",
+          sub_desc: `${doneDelay}초 후 인증사진 촬영화면으로 이동합니다.`,
+          tip: "",
+        };
 
   return (
     <MapContainer>
@@ -119,7 +136,7 @@ export default function NavigationPage() {
           zIndex: 10,
         }}
       />
-      <NavigationMessage {...pathData[cPosIndex]} current_index={cPosIndex} />
+      <NavigationMessage {...msgData} current_index={cPosIndex} />
     </MapContainer>
   );
 }
