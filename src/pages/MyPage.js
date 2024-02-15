@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -157,8 +157,13 @@ export default function MyPage() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [id, setId] = useState("");
-  useEffect(() => {
+  const token = localStorage.getItem("access_token");
+
+  useEffect(async () => {
     // If name, id is in local storage, set it to state
+    axios.defaults.headers.common.Authorization = token;
+    const { data } = await axios.get("/users");
+    console.log("data is ", data);
     setName(localStorage.getItem("name"));
     setId(localStorage.getItem("id"));
   }, []);

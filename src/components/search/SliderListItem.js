@@ -147,7 +147,7 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
         <ListContent>
           <TitleContainer>
             <div>{data.title}</div>
-            <div>{data.start_at?.slice(11, 16)}</div>
+            <div>{data.startAt?.slice(11, 16)}</div>
           </TitleContainer>
           <Description>
             <div>{data.place}</div>, &nbsp;

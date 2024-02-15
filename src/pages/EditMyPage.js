@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
-
+import ProfileConfirmModal from "../components/common/ProfileConfirmModal";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../hooks/useModal";
+import axios from "axios";
+import { useRef } from "react";
 
 const Container = styled.div`
   position: fixed;
@@ -53,6 +56,9 @@ const ProfileColumnContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  #chooseFile {
+    display: none;
+  }
 `;
 
 const ProfileImage = styled.img`
@@ -112,10 +118,14 @@ const EditSectionNotice = styled.div`
   color: var(--pink-500);
   margin-bottom: 3rem;
   text-align: left;
+  > p {
+    margin-bottom: 0.4rem;
+  }
 `;
 
 const EditSelectionNoticeLink = styled.a`
   text-decoration: underline;
+  color: var(--pink-600);
 `;
 
 const DoneButton = styled.div`
@@ -163,21 +173,75 @@ const DoneWithoutButton = styled.div`
 
 export default function EditMyPage() {
   const [name, setName] = useState("");
+  const { openModal, closeModal } = useModal();
+
   const [id, setId] = useState("");
   const disabled = !name || !id;
+  const token = localStorage.getItem("access_token");
+
   const navigate = useNavigate();
+  const noScore = () => {
+    openModal(ProfileConfirmModal, {
+      handleClose: closeModal,
+      onConfirm: () => {
+        navigate("/profile");
+        closeModal();
+      },
+    });
+  };
+  const getPersonalInfo = async () => {
+    try {
+      axios.defaults.headers.common.Authorization = token;
+      const personalResponse = await axios.get(`/api/users`);
+      if (personalResponse.data.success) {
+        if (personalResponse.data.profileImage) {
+          // data.image
+          console.log("file is ", personalResponse.data.profileImage);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  useEffect(() => {
-    setName(localStorage.getItem("name"));
-    setId(localStorage.getItem("id"));
-  }, []);
+  const imgRef = useRef();
+  let imgURL;
 
+  const loadImg = (e) => {
+    const imgFile = e.target.files[0];
+    let imgURL = URL.createObjectURL(imgFile);
+    console.log(imgURL);
+    imgRef.current.setAttribute("src", imgURL);
+  };
+
+  const imageSave = () => {
+    localStorage.setItem("profile", JSON.stringify(imgURL)); // localStorage에 이미지URL을 profile키에 저장하고,
+    const profile = localStorage.getItem("profile"); // 다시 localStorage에서 img데이터 꺼내와서 변수에 저장해준다.
+    const isVaild = JSON.parse(profile);
+
+    if (!isVaild) {
+      // undefined일때
+      console.log("no image");
+      return;
+    }
+
+    imgRef.current.setAttribute("src", isVaild);
+    window.alert("프로필 이미지가 저장되었습니다!.");
+  };
   const edit = () => {
     if (disabled) return;
     localStorage.setItem("name", name);
     localStorage.setItem("id", id);
+    imageSave();
     navigate(-1);
   };
+
+  useEffect(() => {
+    getPersonalInfo();
+    setName(localStorage.getItem("name"));
+    setId(localStorage.getItem("id"));
+  }, []);
+
   return (
     <Container>
       <MyPageTitle>
@@ -189,7 +253,18 @@ export default function EditMyPage() {
       </MyPageTitle>
       <ProfileContainer>
         <ProfileColumnContainer>
-          <ProfileImage src="https://via.placeholder.com/150" />
+          {/* <ImageUploader defaultFile={defaultFile} /> */}
+          <input
+            type="file"
+            id="chooseFile"
+            accept="image/*"
+            name="chooseImg"
+            onChange={loadImg}
+          />
+
+          <label htmlFor="chooseFile">
+            <ProfileImage src="https://via.placeholder.com/150" ref={imgRef} />
+          </label>
           <ProfileName>{name} 님</ProfileName>
         </ProfileColumnContainer>
       </ProfileContainer>
@@ -202,9 +277,9 @@ export default function EditMyPage() {
             onChange={(e) => setName(e.target.value)}
           />
           <EditSectionNotice>
-            이름은 2글자 이상 10글자 이하로 입력해주세요.
+            봉사활동 &quot;실명이름&quot; 인정에 필요합니다.
             <br />
-            이름은 한글, 영문 대소문자만 입력 가능합니다.
+            오기입 시 봉사활동 점수 인정이 되지 않습니다.
           </EditSectionNotice>
         </EditSection>
         <EditSection>
@@ -215,20 +290,28 @@ export default function EditMyPage() {
             onChange={(e) => setId(e.target.value)}
           />
           <EditSectionNotice>
-            봉사활동 점수 인정에 필요한 정보입니다.
-            <br />
-            오기입 시 봉사활동 점수 인정이 되지 않습니다.
-            <br />
-            <EditSelectionNoticeLink>
-              1365 아이디 확인하기
+            <p>
+              봉사활동 점수 인정에 필요한 정보입니다.
+              <br />
+              오기입 시 봉사활동 점수 인정이 되지 않습니다.
+              <br />
+            </p>
+            <EditSelectionNoticeLink
+              href="https://www.1365.go.kr/vols/P9940/mber/volsMber.do"
+              target="_blank"
+            >
+              1365 자원봉사포털 회원가입 하기
             </EditSelectionNoticeLink>
           </EditSectionNotice>
         </EditSection>
       </EditSectionContainer>
+
       <DoneButton className={disabled ? "disabled" : ""} onClick={edit}>
         입력 완료
       </DoneButton>
-      <DoneWithoutButton>점수 인정 없이 산책하기</DoneWithoutButton>
+      <DoneWithoutButton onClick={() => noScore()}>
+        점수 인정 없이 산책하기
+      </DoneWithoutButton>
     </Container>
   );
 }
