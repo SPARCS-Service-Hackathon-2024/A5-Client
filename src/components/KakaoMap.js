@@ -44,7 +44,6 @@ export default function KakaoMap() {
     if (loading) return null;
     if (!window.kakao) return null;
     if (!mapRef.current) return null;
-    console.log("Creating current location overlay");
     const pos = {
       lat: 36.3766263411,
       lng: 127.38719915966,
@@ -151,14 +150,6 @@ export default function KakaoMap() {
       );
     }
   }, [loading, location.lat, location.lng, locked]);
-
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map) return;
-    if (!location.lat || !location.lng) return;
-    // Add path
-    setPath((prev) => [...prev, { lat: location.lat, lng: location.lng }]);
-  }, [location.lat, location.lng]);
 
   const lock = () => {
     setMapState((prev) => ({ ...prev, locked: true }));
