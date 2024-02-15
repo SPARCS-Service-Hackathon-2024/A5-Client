@@ -9,7 +9,9 @@ import SearchBar from "../components/SearchBar";
 import SearchCategory from "../components/SearchCategory";
 import SearchPanel from "../components/SearchPanel";
 import watchLocation from "../hooks/watchLocation";
+import { navigateState } from "../store/navigation";
 import { useNavigate } from "react-router-dom";
+import AchievementModal from "../components/AchievementModal";
 
 const MapContainer = styled.div`
   position: absolute;
@@ -40,6 +42,7 @@ function degreesToRadians(degrees) {
 
 export default function NavigationPage() {
   const navigate = useNavigate();
+  const [navigateFlag, setNavigateFlag] = useRecoilState(navigateState);
   const pathData = [
     {
       pos: { lat: 36.376626341108, lng: 127.38719915966 },
@@ -66,9 +69,12 @@ export default function NavigationPage() {
       tip: "관광객들의 호기심을 지속적 자극으로 이끌 수 있는 단편적인 질문을 수시로 던지면서 흥미를 지속하는 것이 좋습니다.",
     },
   ];
+  const destination_desc = "유성온천 야외 족욕체험장, 0m, 0분";
   const [cPosIndex, setCPosIndex] = useState(0);
   const [path, setPath] = useRecoilState(pathState);
   const [doneDelay, setDoneDelay] = useState(null);
+  const [achievement, setAchievement] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   const { location } = watchLocation();
 
@@ -99,21 +105,48 @@ export default function NavigationPage() {
   }, [location.lat, location.lng]);
 
   useEffect(() => {
+    if (achievement) return;
+    if (navigateFlag) return;
     setPath([
       { lat: location.lat, lng: location.lng },
       ...pathData.slice(cPosIndex + 1).map((p) => p.pos),
     ]);
   }, [cPosIndex, location.lat, location.lng]);
 
-  const msgData =
-    cPosIndex < pathData.length - 1
-      ? pathData[cPosIndex]
-      : {
-          pos: { lat: location.lat, lng: location.lng },
-          main_desc: "인증사진 촬영하기",
-          sub_desc: `${doneDelay}초 후 인증사진 촬영화면으로 이동합니다.`,
-          tip: "",
-        };
+  let msgData = null;
+  if (cPosIndex == pathData.length - 1) {
+    msgData = {
+      pos: { lat: location.lat, lng: location.lng },
+      main_desc: "인증사진 촬영하기",
+      sub_desc: `${doneDelay}초 후 인증사진 촬영화면으로 이동합니다.`,
+      tip: "",
+    };
+  } else if (cPosIndex < pathData.length - 1) {
+    msgData = pathData[cPosIndex];
+  }
+  console.log(achievement);
+  if (achievement) {
+    msgData = {
+      pos: { lat: location.lat, lng: location.lng },
+      main_desc: "도착!",
+      sub_desc: destination_desc,
+      tip: "",
+    };
+    console.log("ACHIEVEMENT");
+  }
+  useEffect(() => {
+    if (navigateFlag) {
+      setAchievement(true);
+      setNavigateFlag(false);
+      setPath([]);
+      setCPosIndex(-1);
+      console.log("POPUP");
+    }
+  }, [navigateFlag]);
+
+  const close = () => {
+    setShowModal(false);
+  };
 
   return (
     <MapContainer>
@@ -137,6 +170,7 @@ export default function NavigationPage() {
         }}
       />
       <NavigationMessage {...msgData} current_index={cPosIndex} />
+      {achievement && showModal && <AchievementModal close={close} />}
     </MapContainer>
   );
 }
