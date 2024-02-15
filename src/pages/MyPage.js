@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +9,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   font-family: Pretendard;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const MyPageTitle = styled.div`
@@ -82,11 +86,13 @@ const ProfileStatsContent = styled.div`
   transform: translateY(1.5rem);
 `;
 
-const Summary = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--gray-500);
-  padding: 1.7rem;
+const EditSectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 3rem);
+  align-items: start;
+  margin-top: 2rem;
+  padding-left: 3rem;
 `;
 
 const EditButton = styled.div`
@@ -107,15 +113,62 @@ const EditButton = styled.div`
   touch-action: none;
 `;
 
+const EditSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: start;
+  margin-bottom: 2rem;
+`;
+
+const EditSectionTitle = styled.div`
+  font-size: 1.31rem;
+  font-weight: bold;
+  color: var(--gray-500);
+  margin-bottom: 1rem;
+`;
+
+const EditSectionInput = styled.div`
+  width: calc(100% - 6rem);
+  height: 3.5rem;
+  border: none;
+  border-bottom: 0.12rem solid var(--pink-200);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--pink-600);
+  margin-bottom: 0.3rem;
+  padding-left: 0.2rem;
+  line-height: 4rem;
+  vertical-align: baseline;
+  transition: border-bottom 0.12s;
+  text-align: left;
+`;
+
+const EditSectionNotice = styled.div`
+  font-size: 0.85rem;
+  font-weight: normal;
+  color: var(--pink-600);
+  margin-bottom: 3rem;
+  margin-left: 0.2rem;
+  margin-top: 0.5rem;
+  text-align: left;
+`;
 export default function MyPage() {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  useEffect(() => {
+    // If name, id is in local storage, set it to state
+    setName(localStorage.getItem("name"));
+    setId(localStorage.getItem("id"));
+  }, []);
   return (
     <Container>
       <MyPageTitle>마이페이지</MyPageTitle>
       <ProfileContainer>
         <ProfileColumnContainer>
           <ProfileImage src="https://via.placeholder.com/150" />
-          <ProfileName>홍길동 님</ProfileName>
+          <ProfileName>{name} 님</ProfileName>
           <ProfileBelowName>가치가유 상위 23%</ProfileBelowName>
         </ProfileColumnContainer>
         <ProfileColumnContainer>
@@ -129,12 +182,24 @@ export default function MyPage() {
           </ProfileStats>
         </ProfileColumnContainer>
       </ProfileContainer>
-      <Summary>
-        스팍스 님은
-        <br />
-        어쩌고...
-      </Summary>
-      <EditButton onClick={() => navigate("/edit")}>프로필 수정하기</EditButton>
+      <EditSectionContainer>
+        <EditSection>
+          <EditSectionTitle>이름</EditSectionTitle>
+          <EditSectionInput>{name}</EditSectionInput>
+        </EditSection>
+        <EditSection>
+          <EditSectionTitle>1365 아이디</EditSectionTitle>
+          <EditSectionInput>{id}</EditSectionInput>
+        </EditSection>
+        <EditSection>
+          <EditSectionTitle>관광해설사 인증여부</EditSectionTitle>
+          <EditSectionInput>인증되었습니다.</EditSectionInput>
+          <EditSectionNotice>인증정보 확인하기</EditSectionNotice>
+        </EditSection>
+        <EditButton onClick={() => navigate("/edit")}>
+          프로필 수정하기
+        </EditButton>
+      </EditSectionContainer>
     </Container>
   );
 }

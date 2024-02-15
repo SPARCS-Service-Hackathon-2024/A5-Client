@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import ProfileConfirmModal from "../components/common/ProfileConfirmModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../hooks/useModal";
-import { useEffect } from "react";
 import axios from "axios";
 import { useRef } from "react";
 
@@ -229,9 +228,18 @@ export default function EditMyPage() {
     imgRef.current.setAttribute("src", isVaild);
     window.alert("프로필 이미지가 저장되었습니다!.");
   };
+  const edit = () => {
+    if (disabled) return;
+    localStorage.setItem("name", name);
+    localStorage.setItem("id", id);
+    imageSave();
+    navigate(-1);
+  };
 
   useEffect(() => {
     getPersonalInfo();
+    setName(localStorage.getItem("name"));
+    setId(localStorage.getItem("id"));
   }, []);
 
   return (
@@ -257,7 +265,7 @@ export default function EditMyPage() {
           <label htmlFor="chooseFile">
             <ProfileImage src="https://via.placeholder.com/150" ref={imgRef} />
           </label>
-          <ProfileName>홍길동 님</ProfileName>
+          <ProfileName>{name} 님</ProfileName>
         </ProfileColumnContainer>
       </ProfileContainer>
       <EditSectionContainer>
@@ -298,10 +306,7 @@ export default function EditMyPage() {
         </EditSection>
       </EditSectionContainer>
 
-      <DoneButton
-        className={disabled ? "disabled" : ""}
-        onClick={() => imageSave()}
-      >
+      <DoneButton className={disabled ? "disabled" : ""} onClick={edit}>
         입력 완료
       </DoneButton>
       <DoneWithoutButton onClick={() => noScore()}>

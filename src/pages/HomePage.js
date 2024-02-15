@@ -7,7 +7,12 @@ import PetIcon from "../assets/pet.svg";
 import GuideIcon from "../assets/guide_location.svg";
 import GarbageIcon from "../assets/garbage.svg";
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+`;
 const MainTextContainer = styled.div`
   width: 100vw;
   height: 16rem;

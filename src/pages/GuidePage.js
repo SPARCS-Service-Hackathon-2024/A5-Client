@@ -10,6 +10,12 @@ import { sliderState } from "../store/map";
 import { useNavigate } from "react-router-dom";
 
 const GuideContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
   background: linear-gradient(to bottom, transparent 50%, var(--bg-color) 50%);
   --bg-color: ${(props) => props.bgColor};
   @media screen and (max-width: 325px) {
