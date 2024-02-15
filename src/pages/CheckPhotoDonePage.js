@@ -2,6 +2,7 @@ import Footer from "../components/common/Footer";
 import styled from "styled-components";
 import { ReactComponent as Download } from "../assets/download_photo.svg";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 const VerifyContainer = styled.div`
   > div:first-child {
@@ -58,6 +59,25 @@ export default function CheckPhotoDone() {
     console.log("continue walk");
     navigate("/navigation");
   };
+  const onClickImgLink = useCallback((srcUrl, name) => {
+    fetch(srcUrl, { method: "GET" })
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout((_) => {
+          window.URL.revokeObjectURL(url);
+        }, 1000);
+        a.remove();
+      })
+      .catch((err) => {
+        console.error("err", err);
+      });
+  }, []);
   //TODO: image is dummy, replace with api
   const image =
     "https://images.unsplash.com/photo-1609951651556-5334e2706168?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
@@ -66,7 +86,9 @@ export default function CheckPhotoDone() {
       <div>촬영이 완료되었습니다.</div>
       <ImageContainer>
         <img src={image} />
-        <Download />
+        <Download
+          onClick={() => onClickImgLink(image, "volunteer_check_photo")}
+        />
       </ImageContainer>
       <WarningTitle>촬영 관련 주의사항</WarningTitle>
       <Pinkbox>
