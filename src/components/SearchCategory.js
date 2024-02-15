@@ -23,18 +23,18 @@ const CategoryContainer = styled.div`
 const CategoryItem = styled.div`
   width: max-content;
   white-space: nowrap;
-  height: 2rem;
-  padding: 0rem 0.8rem;
-  border-radius: 1rem;
+  height: 2.6rem;
+  padding: 0rem 1rem;
+  border-radius: 1.3rem;
   background-color: ${(props) =>
     props.isActive ? "#FB7185" : "var(--gray-000)"};
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.25));
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${(props) => (props.isActive ? "white" : "var(--gray-500)")};
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 400;
   margin-right: 0.5rem;
   > svg {
     margin-right: 0.5rem;

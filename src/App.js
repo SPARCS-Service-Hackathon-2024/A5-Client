@@ -31,7 +31,6 @@ function RouteList() {
   const location = useLocation();
   let direction = "right";
   useEffect(() => {
-    console.log(`From ${lastLocation?.pathname} to ${location.pathname}`);
     if (lastLocation) {
       const lastIdx = pageOrder.indexOf(lastLocation.pathname);
       const currentIdx = pageOrder.indexOf(location.pathname);
@@ -40,7 +39,6 @@ function RouteList() {
       } else {
         direction = "left";
       }
-      console.log(`Direction: ${direction}`);
     }
     setLastLocation(location);
   }, [location]);

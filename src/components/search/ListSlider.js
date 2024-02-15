@@ -2,16 +2,20 @@ import { useState } from "react";
 import SliderListItem from "./SliderListItem";
 import { useEffect } from "react";
 import aroundWalkPath from "../../dummyData/aroundWalkPath.json";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { sliderState } from "../../store/map";
+
+import { iconSpotState as recoilIconSpotState } from "../../store/map";
 
 const ListSlider = ({ style }) => {
   const [data, setData] = useState([]);
   const [toggleWalkPath, setToggleWalkPath] = useState(null);
   const { menu } = useRecoilValue(sliderState);
+  const [iconSpotState, setIconSpotState] = useRecoilState(recoilIconSpotState);
 
   useEffect(() => {
     setData(aroundWalkPath.promenades);
+    setIconSpotState(aroundWalkPath.promenades);
   }, []);
 
   const typeToMenuMapping = {

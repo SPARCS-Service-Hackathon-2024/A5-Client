@@ -16,15 +16,7 @@ export default function SearchPage() {
   return (
     <MapContainer>
       <KakaoMap />
-      <SearchBar
-        style={{
-          position: "absolute",
-          top: "2.5rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 10,
-        }}
-      />
+      <SearchBar />
       <SearchCategory
         style={{
           position: "absolute",
