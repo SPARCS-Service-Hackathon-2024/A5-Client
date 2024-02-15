@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "../style/NavBar.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ReactComponent as House } from "../assets/house.svg";
+import { ReactComponent as GrayHouse } from "../assets/gray_house.svg";
+import { ReactComponent as GachiLogo } from "../assets/gachi_gayu.svg";
+import { ReactComponent as GrayGachiLogo } from "../assets/gray_gachi_gayu.svg";
+import { ReactComponent as Person } from "../assets/person.svg";
+import { ReactComponent as GrayPerson } from "../assets/gray_person.svg";
 
 import searchIcon from "../assets/gray_gachi_gayu.svg";
 import homeIcon from "../assets/gray_house.svg";
@@ -37,8 +43,6 @@ const SelectedIcon = styled.img`
 `;
 
 export default function NavBar() {
-  const location = useLocation();
-  const selected = location.pathname.split("/")[1];
   const navigate = useNavigate();
 
   const clickIcon = (name) => {
