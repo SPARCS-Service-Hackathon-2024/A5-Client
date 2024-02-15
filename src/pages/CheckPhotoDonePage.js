@@ -64,7 +64,6 @@ export default function CheckPhotoDone() {
   );
 
   useEffect(() => {
-    // Saved with localStorage.setItem("photo", data);
     const data = localStorage.getItem("photo");
     setTakenImage(data);
   }, []);
