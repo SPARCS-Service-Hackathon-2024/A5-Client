@@ -10,6 +10,8 @@ const Container = styled.div`
   flex-direction: column;
   font-family: Pretendard;
   position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const MyPageTitle = styled.div`

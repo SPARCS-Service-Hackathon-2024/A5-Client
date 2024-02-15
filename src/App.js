@@ -22,8 +22,28 @@ import CheckPhotoDonePage from "./pages/CheckPhotoDonePage";
 import GuidePage from "./pages/GuidePage";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
+import { useEffect, useState } from "react";
+
+const pageOrder = ["/navigation", "/search", "/home", "/profile", "/edit"];
+
 function RouteList() {
+  const [lastLocation, setLastLocation] = useState(null);
   const location = useLocation();
+  let direction = "right";
+  useEffect(() => {
+    console.log(`From ${lastLocation?.pathname} to ${location.pathname}`);
+    if (lastLocation) {
+      const lastIdx = pageOrder.indexOf(lastLocation.pathname);
+      const currentIdx = pageOrder.indexOf(location.pathname);
+      if (lastIdx < currentIdx) {
+        direction = "right";
+      } else {
+        direction = "left";
+      }
+      console.log(`Direction: ${direction}`);
+    }
+    setLastLocation(location);
+  }, [location]);
   return (
     <TransitionGroup className="transitions-wrapper">
       <CSSTransition timeout={300} classNames={"right"} key={location.pathname}>
