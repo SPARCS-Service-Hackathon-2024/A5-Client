@@ -179,6 +179,8 @@ export default function EditMyPage() {
   const disabled = !name || !id;
   const token = localStorage.getItem("access_token");
 
+  const [data, setData] = useState(null);
+
   const navigate = useNavigate();
   const noScore = () => {
     openModal(ProfileConfirmModal, {
@@ -191,9 +193,11 @@ export default function EditMyPage() {
   };
   const getPersonalInfo = async () => {
     try {
-      axios.defaults.headers.common.Authorization = token;
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       const personalResponse = await axios.get(`/api/users`);
-      if (personalResponse.data.success) {
+      if (personalResponse.data) {
+        setData(personalResponse.data);
+        console.log(2);
         if (personalResponse.data.profileImage) {
           // data.image
           console.log("file is ", personalResponse.data.profileImage);
@@ -278,7 +282,14 @@ export default function EditMyPage() {
           />
 
           <label htmlFor="chooseFile">
-            <ProfileImage src="https://via.placeholder.com/150" ref={imgRef} />
+            <ProfileImage
+              src={
+                data && data.profileImage
+                  ? data.profileImage
+                  : "https://via.placeholder.com/150"
+              }
+              ref={imgRef}
+            />
           </label>
           <ProfileName>{name} 님</ProfileName>
         </ProfileColumnContainer>

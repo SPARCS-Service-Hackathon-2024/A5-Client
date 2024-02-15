@@ -163,6 +163,7 @@ export default function MyPage() {
   const [accountId, setAccountId] = useState(null);
   const [certification, setCertification] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  const [data, setData] = useState(null);
   const token = localStorage.getItem("access_token");
 
   const GetUser = async () => {
@@ -174,6 +175,7 @@ export default function MyPage() {
       setAccountId(response.data.accountId);
       setProfileImage(response.data.profileImage);
       setCertification(response.data.certification);
+      setData(response.data);
     } catch (error) {
       console.log("empty or error");
     }
@@ -192,16 +194,22 @@ export default function MyPage() {
             }
           />
           <ProfileName>{name} 님</ProfileName>
-          <ProfileBelowName>가치가유 상위 23%</ProfileBelowName>
+          <ProfileBelowName>
+            가치가유 상위 {data && data.top ? data.top : "-"}
+          </ProfileBelowName>
         </ProfileColumnContainer>
         <ProfileColumnContainer>
           <ProfileStats>
             <ProfileStatsTitle>이번 주 산책한 거리</ProfileStatsTitle>
-            <ProfileStatsContent>5.2km</ProfileStatsContent>
+            <ProfileStatsContent>
+              {data ? data.weekLength : "-"}
+            </ProfileStatsContent>
           </ProfileStats>
           <ProfileStats>
             <ProfileStatsTitle>이번 주 산책한 시간</ProfileStatsTitle>
-            <ProfileStatsContent>4시간 30분</ProfileStatsContent>
+            <ProfileStatsContent>
+              {data ? data.weekTime : "-"}
+            </ProfileStatsContent>
           </ProfileStats>
         </ProfileColumnContainer>
       </ProfileContainer>
