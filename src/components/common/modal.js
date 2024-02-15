@@ -39,14 +39,6 @@ const Modal = ({
   );
 };
 
-const Button = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: transparent;
-  color: ${({ theme }) => theme.color.gachiPink};
-`;
-
 const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,34 +76,9 @@ const ButtonWrapper = styled.div`
     border-top: 1px solid #e7e5e4;
     background-color: white;
   }
+  .cancel {
+    border-left: 1px solid #e7e5e4;
+  }
 `;
-
-// Modal 컴포넌트 사용 예시
-export const ModalShowButton = () => {
-  const { openModal, closeModal } = useModal();
-  return (
-    <button
-      onClick={() =>
-        openModal(ModalTest1, {
-          handleClose: closeModal,
-        })
-      }
-    >
-      모달 띄우기
-    </button>
-  );
-};
-
-const ModalTest1 = ({ handleClose }) => {
-  return (
-    <Modal
-      title="댓글 삭제"
-      content="정말 삭제하시겠습니까?"
-      handleClose={handleClose}
-      onCancel={handleClose}
-      onConfirm={handleClose}
-    />
-  );
-};
 
 export default Modal;
