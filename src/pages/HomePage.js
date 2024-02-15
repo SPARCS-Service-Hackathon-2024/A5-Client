@@ -195,7 +195,7 @@ export default function HomePage() {
         </GridSectionContainer2>
       </GridSectionContainer1>
       {data.map((d) => (
-        <>
+        <span key={d.category}>
           <SectionTitle>{d.category}</SectionTitle>
           <RowSectionContainer>
             <RowSectionInnerContainer>
@@ -250,7 +250,7 @@ export default function HomePage() {
               ))}
             </RowSectionInnerContainer>
           </RowSectionContainer>
-        </>
+        </span>
       ))}
       <p style={{ height: "4rem" }} />
     </Container>
