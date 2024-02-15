@@ -19,6 +19,7 @@ import Layout from "./components/layout/Layout";
 import CheckPhotoLayout from "./components/layout/CheckPhoto";
 import CheckPhotoPage from "./pages/CheckPhotoPage";
 import CheckPhotoDonePage from "./pages/CheckPhotoDonePage";
+import GuidePage from "./pages/GuidePage";
 
 function App() {
   return (
@@ -49,6 +50,22 @@ function App() {
                   element={<CheckPhotoDonePage />}
                 />
               </Route>
+              <Route
+                path="/guide/walk-together"
+                element={<GuidePage item="함께 걷기" />}
+              />
+              <Route
+                path="/guide/tourism"
+                element={<GuidePage item="관광해설" />}
+              />
+              <Route
+                path="/guide/errand"
+                element={<GuidePage item="심부름" />}
+              />
+              <Route
+                path="/guide/plogging"
+                element={<GuidePage item="플로깅" />}
+              />
               <Route path="/edit" element={<EditMyPage />} />
             </Routes>
           </BrowserRouter>
