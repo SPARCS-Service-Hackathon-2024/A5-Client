@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { GlobalStyle, muiTheme, theme } from "./style/theme";
 import { ThemeProvider } from "styled-components";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
@@ -20,6 +20,46 @@ import CheckPhotoLayout from "./components/layout/CheckPhoto";
 import CheckPhotoPage from "./pages/CheckPhotoPage";
 import CheckPhotoDonePage from "./pages/CheckPhotoDonePage";
 import GuidePage from "./pages/GuidePage";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+
+function RouteList() {
+  const location = useLocation();
+  return (
+    <TransitionGroup className="transitions-wrapper">
+      <CSSTransition timeout={300} classNames={"right"} key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<SplashScreen />} />
+          <Route element={<Layout />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/profile" element={<MyPage />} />
+            <Route path="/navigation" element={<NavigationPage />} />
+          </Route>
+          <Route element={<VerifyLayout />}>
+            <Route path="/verification" element={<VerifyPage />} />
+            <Route path="/verify-success" element={<VerifySuccessPage />} />
+            <Route path="/verify-fail" element={<VerifyFailPage />} />
+          </Route>
+          <Route element={<CheckPhotoLayout />}>
+            <Route path="/check-photo" element={<CheckPhotoPage />} />
+            <Route path="/check-photo-done" element={<CheckPhotoDonePage />} />
+          </Route>
+          <Route
+            path="/guide/walk-together"
+            element={<GuidePage item="함께 걷기" />}
+          />
+          <Route
+            path="/guide/tourism"
+            element={<GuidePage item="관광해설" />}
+          />
+          <Route path="/guide/errand" element={<GuidePage item="심부름" />} />
+          <Route path="/guide/plogging" element={<GuidePage item="플로깅" />} />
+          <Route path="/edit" element={<EditMyPage />} />
+        </Routes>
+      </CSSTransition>
+    </TransitionGroup>
+  );
+}
 
 function App() {
   return (
@@ -29,45 +69,8 @@ function App() {
           <GlobalStyle />
           <BrowserRouter>
             <ToastMessage />
+            <RouteList />
             <ModalRenderer />
-            <Routes>
-              <Route path="/" element={<SplashScreen />} />
-              <Route element={<Layout />}>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/profile" element={<MyPage />} />
-                <Route path="/navigation" element={<NavigationPage />} />
-              </Route>
-              <Route element={<VerifyLayout />}>
-                <Route path="/verification" element={<VerifyPage />} />
-                <Route path="/verify-success" element={<VerifySuccessPage />} />
-                <Route path="/verify-fail" element={<VerifyFailPage />} />
-              </Route>
-              <Route element={<CheckPhotoLayout />}>
-                <Route path="/check-photo" element={<CheckPhotoPage />} />
-                <Route
-                  path="/check-photo-done"
-                  element={<CheckPhotoDonePage />}
-                />
-              </Route>
-              <Route
-                path="/guide/walk-together"
-                element={<GuidePage item="함께 걷기" />}
-              />
-              <Route
-                path="/guide/tourism"
-                element={<GuidePage item="관광해설" />}
-              />
-              <Route
-                path="/guide/errand"
-                element={<GuidePage item="심부름" />}
-              />
-              <Route
-                path="/guide/plogging"
-                element={<GuidePage item="플로깅" />}
-              />
-              <Route path="/edit" element={<EditMyPage />} />
-            </Routes>
           </BrowserRouter>
         </MuiThemeProvider>
       </ThemeProvider>
