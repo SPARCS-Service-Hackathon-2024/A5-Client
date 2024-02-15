@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -166,6 +166,18 @@ export default function EditMyPage() {
   const [id, setId] = useState("");
   const disabled = !name || !id;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setName(localStorage.getItem("name"));
+    setId(localStorage.getItem("id"));
+  }, []);
+
+  const edit = () => {
+    if (disabled) return;
+    localStorage.setItem("name", name);
+    localStorage.setItem("id", id);
+    navigate(-1);
+  };
   return (
     <Container>
       <MyPageTitle>
@@ -178,7 +190,7 @@ export default function EditMyPage() {
       <ProfileContainer>
         <ProfileColumnContainer>
           <ProfileImage src="https://via.placeholder.com/150" />
-          <ProfileName>홍길동 님</ProfileName>
+          <ProfileName>{name} 님</ProfileName>
         </ProfileColumnContainer>
       </ProfileContainer>
       <EditSectionContainer>
@@ -213,8 +225,9 @@ export default function EditMyPage() {
           </EditSectionNotice>
         </EditSection>
       </EditSectionContainer>
-
-      <DoneButton className={disabled ? "disabled" : ""}>입력 완료</DoneButton>
+      <DoneButton className={disabled ? "disabled" : ""} onClick={edit}>
+        입력 완료
+      </DoneButton>
       <DoneWithoutButton>점수 인정 없이 산책하기</DoneWithoutButton>
     </Container>
   );

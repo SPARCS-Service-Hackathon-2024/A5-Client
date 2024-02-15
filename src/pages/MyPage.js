@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -157,13 +157,18 @@ export default function MyPage() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [id, setId] = useState("");
+  useEffect(() => {
+    // If name, id is in local storage, set it to state
+    setName(localStorage.getItem("name"));
+    setId(localStorage.getItem("id"));
+  }, []);
   return (
     <Container>
       <MyPageTitle>마이페이지</MyPageTitle>
       <ProfileContainer>
         <ProfileColumnContainer>
           <ProfileImage src="https://via.placeholder.com/150" />
-          <ProfileName>홍길동 님</ProfileName>
+          <ProfileName>{name} 님</ProfileName>
           <ProfileBelowName>가치가유 상위 23%</ProfileBelowName>
         </ProfileColumnContainer>
         <ProfileColumnContainer>
@@ -180,11 +185,11 @@ export default function MyPage() {
       <EditSectionContainer>
         <EditSection>
           <EditSectionTitle>이름</EditSectionTitle>
-          <EditSectionInput>김이박</EditSectionInput>
+          <EditSectionInput>{name}</EditSectionInput>
         </EditSection>
         <EditSection>
           <EditSectionTitle>1365 아이디</EditSectionTitle>
-          <EditSectionInput>sparcs12345</EditSectionInput>
+          <EditSectionInput>{id}</EditSectionInput>
         </EditSection>
         <EditSection>
           <EditSectionTitle>관광해설사 인증여부</EditSectionTitle>

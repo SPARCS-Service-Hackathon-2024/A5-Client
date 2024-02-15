@@ -9,6 +9,9 @@ import GarbageIcon from "../assets/garbage.svg";
 
 const Container = styled.div`
   position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
 `;
 const MainTextContainer = styled.div`
   width: 100vw;
