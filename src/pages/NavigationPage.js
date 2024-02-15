@@ -13,6 +13,8 @@ import { navigateState } from "../store/navigation";
 import { useNavigate } from "react-router-dom";
 import AchievementModal from "../components/AchievementModal";
 
+import { calculateDistance } from "../utils/mapcalc";
+
 const MapContainer = styled.div`
   position: absolute;
   left: 0;
@@ -20,26 +22,6 @@ const MapContainer = styled.div`
   height: 100%;
   width: 100%;
 `;
-function calculateDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // 지구의 반지름(km)
-
-  const dLat = degreesToRadians(lat2 - lat1);
-  const dLon = degreesToRadians(lon2 - lon1);
-
-  lat1 = degreesToRadians(lat1);
-  lat2 = degreesToRadians(lat2);
-
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // 거리(km)
-}
-
-function degreesToRadians(degrees) {
-  return degrees * (Math.PI / 180);
-}
-
 export default function NavigationPage() {
   const navigate = useNavigate();
   const [navigateFlag, setNavigateFlag] = useRecoilState(navigateState);
@@ -124,7 +106,6 @@ export default function NavigationPage() {
   } else if (cPosIndex < pathData.length - 1) {
     msgData = pathData[cPosIndex];
   }
-  console.log(achievement);
   if (achievement) {
     msgData = {
       pos: { lat: location.lat, lng: location.lng },
@@ -132,7 +113,6 @@ export default function NavigationPage() {
       sub_desc: destination_desc,
       tip: "",
     };
-    console.log("ACHIEVEMENT");
   }
   useEffect(() => {
     if (navigateFlag) {
@@ -140,7 +120,6 @@ export default function NavigationPage() {
       setNavigateFlag(false);
       setPath([]);
       setCPosIndex(-1);
-      console.log("POPUP");
     }
   }, [navigateFlag]);
 
@@ -151,15 +130,7 @@ export default function NavigationPage() {
   return (
     <MapContainer>
       <KakaoMap />
-      <SearchBar
-        style={{
-          position: "absolute",
-          top: "2.5rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 10,
-        }}
-      />
+      <SearchBar />
       <SearchCategory
         style={{
           position: "absolute",

@@ -15,9 +15,19 @@ export const mapState = atom({
   },
 });
 
+export const highlightState = atom({
+  key: "highlightState",
+  default: null,
+});
+
 export const addressInputState = atom({
   key: "addressInputState",
   default: "",
+});
+
+export const iconSpotState = atom({
+  key: "iconSpotState",
+  default: [],
 });
 
 export const sliderState = atom({

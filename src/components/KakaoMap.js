@@ -2,8 +2,18 @@ import React, { useEffect, useMemo, useRef } from "react";
 import watchLocation from "../hooks/watchLocation";
 import styled from "@emotion/styled";
 
+import Flag from "../assets/flag.svg";
+import Pet from "../assets/pet.svg";
+import ShoppingBag from "../assets/shopping_bag.svg";
+import GuidePlace from "../assets/guide_location.svg";
+import Garbage from "../assets/garbage.svg";
+
 import { useRecoilState } from "recoil";
-import { mapState as mapStateRecoil } from "../store/map";
+import {
+  highlightState,
+  iconSpotState as recoilIconSpotState,
+  mapState as mapStateRecoil,
+} from "../store/map";
 import { pathState } from "../store/path";
 
 const CurrentLocationButton = styled.div`
@@ -39,6 +49,61 @@ export default function KakaoMap() {
   const { loading, locked } = mapState;
 
   const [path, setPath] = useRecoilState(pathState);
+
+  const [highlight, setHighlight] = useRecoilState(highlightState);
+
+  const [iconSpotState, setIconSpotState] = useRecoilState(recoilIconSpotState);
+
+  const markerRef = useRef(null);
+  useEffect(() => {
+    console.log("iconSpotState", iconSpotState);
+    if (!mapRef.current) return;
+    if (!window.kakao) return;
+    const map = mapRef.current;
+    const markers = iconSpotState.map((spot) => {
+      console.log(spot.location.latitude, spot.location.longitude);
+      const typeMap = {
+        WALK_TOGETHER: Pet,
+        ERRAND: ShoppingBag,
+        TOURISM: GuidePlace,
+        PLOGGING: Garbage,
+      };
+      const marker = new window.kakao.maps.CustomOverlay({
+        map: map,
+        clickable: true,
+        content: `<img src=${typeMap[spot.type]} style="width: 3rem; filter: drop-shadow(0.15rem 0rem 0rem white) drop-shadow(-0.15rem 0rem 0rem white) drop-shadow(0rem 0.15rem 0rem white) drop-shadow(0rem -0.15rem 0rem white) drop-shadow(0.07rem 0.07rem 0.4rem rgba(0, 0, 0, 0.25));" />`,
+        position: new window.kakao.maps.LatLng(
+          Number(spot.location.latitude),
+          Number(spot.location.longitude)
+        ),
+        xAnchor: 0.5,
+        yAnchor: 0.5,
+        zIndex: 2,
+      });
+      marker.setMap(map);
+      return marker;
+    });
+    return () => {
+      markers.forEach((marker) => marker.setMap(null));
+    };
+  }, [iconSpotState, loading]);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    if (!window.kakao) return;
+    const map = mapRef.current;
+    if (highlight) {
+      map.panTo(new window.kakao.maps.LatLng(highlight.y, highlight.x));
+      const marker = new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(highlight.y, highlight.x),
+      });
+      markerRef.current = marker;
+      marker.setMap(map);
+      return () => {
+        marker.setMap(null);
+      };
+    }
+  }, [highlight]);
 
   const currentLocationOverlay = useMemo(() => {
     if (loading) return null;
