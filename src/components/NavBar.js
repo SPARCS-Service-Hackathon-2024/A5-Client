@@ -36,7 +36,7 @@ const SelectedIcon = styled.img`
   height: 2.5rem;
   transform: translate(-50%, ${(props) => (props.selected ? "-50%" : "-42%")});
   opacity: ${(props) => (props.selected ? 1 : 0)};
-  filter: drop-shadow(0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.13));
+  /* filter: drop-shadow(0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.13)); */
   transition:
     opacity 0.3s,
     transform 0.3s;
@@ -48,6 +48,10 @@ export default function NavBar() {
   const clickIcon = (name) => {
     navigate(`/${name}`);
   };
+
+  const location = useLocation();
+
+  const selected = location.pathname.split("/")[1];
 
   const btns = {
     search: {
