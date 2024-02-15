@@ -15,7 +15,7 @@ const MainTextContainer = styled.div`
 `;
 const MainText = styled.div`
   position: absolute;
-  left: 4rem;
+  left: 3rem;
   top: 6rem;
   font-size: 2.3rem;
   font-weight: bold;
@@ -33,7 +33,7 @@ const SectionTitle = styled.div`
   font-weight: 500;
   color: var(--gray-400);
   text-align: left;
-  margin-left: 3.9rem;
+  margin-left: 3rem;
   margin-top: 2.5rem;
 `;
 const GridSectionContainer1 = styled.div`
