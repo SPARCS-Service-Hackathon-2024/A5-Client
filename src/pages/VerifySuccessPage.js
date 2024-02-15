@@ -1,5 +1,4 @@
 import { ReactComponent as Ok } from "../assets/ok.svg";
-import Header from "../components/common/Header";
 import styled from "styled-components";
 
 const NavContainer = styled.div`
@@ -31,7 +30,6 @@ const Desc = styled.div`
 export default function VerifySuccessPage() {
   return (
     <>
-      <Header title="자격증 인증" />
       <NavContainer>
         <Ok />
         <Desc>

@@ -4,6 +4,9 @@ import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: white;
   border-bottom: 1px solid #a8a29e;
   padding: 1.4rem;
   font-weight: 500;
@@ -24,7 +27,7 @@ export default function Header({ title }) {
     <HeaderContainer>
       <MdArrowBackIosNew onClick={() => navigate(-1)} />
       <div className="title">{title}</div>
-      <IoMdClose onClick={() => navigate("/home")} />
+      <IoMdClose onClick={() => navigate("/search")} />
     </HeaderContainer>
   );
 }
