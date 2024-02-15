@@ -1,40 +1,49 @@
 import React, { useState } from "react";
 import "../style/NavBar.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ReactComponent as House } from "../assets/house.svg";
+import { ReactComponent as GrayHouse } from "../assets/gray_house.svg";
+import { ReactComponent as GachiLogo } from "../assets/gachi_gayu.svg";
+import { ReactComponent as GrayGachiLogo } from "../assets/gray_gachi_gayu.svg";
+import { ReactComponent as Person } from "../assets/person.svg";
+import { ReactComponent as GrayPerson } from "../assets/gray_person.svg";
 
 export default function NavBar() {
-  const location = useLocation();
-  const selected = location.pathname.split("/")[1];
   const navigate = useNavigate();
-
-  const clickIcon = (name) => {
-    navigate(`/${name}`);
-  };
-
-  const btns = {
-    search: {
-      icon: "fas fa-search",
-      callback: () => clickIcon("search"),
-    },
-    home: {
-      icon: "fas fa-home",
-      callback: () => clickIcon("home"),
-    },
-    profile: {
-      icon: "fas fa-user",
-      callback: () => clickIcon("profile"),
-    },
-  };
+  const [naviMenu, setNaviMenu] = useState(1);
 
   return (
     <div className="navbar-container">
-      {Object.keys(btns).map((key) => (
-        <i
-          key={key}
-          className={`navicon ${selected === key ? "selected" : ""} ${btns[key].icon}`}
-          onClick={btns[key].callback}
+      {naviMenu === 1 ? (
+        <GachiLogo />
+      ) : (
+        <GrayGachiLogo
+          onClick={() => {
+            setNaviMenu(1);
+            navigate("/search");
+          }}
         />
-      ))}
+      )}
+      {naviMenu === 2 ? (
+        <House />
+      ) : (
+        <GrayHouse
+          onClick={() => {
+            setNaviMenu(2);
+            navigate("/home");
+          }}
+        />
+      )}
+      {naviMenu === 3 ? (
+        <Person />
+      ) : (
+        <GrayPerson
+          onClick={() => {
+            setNaviMenu(3);
+            navigate("/profile");
+          }}
+        />
+      )}
     </div>
   );
 }
