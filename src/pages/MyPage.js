@@ -130,7 +130,6 @@ const EditSectionTitle = styled.div`
 
 const EditSectionInput = styled.div`
   width: calc(100% - 6rem);
-  height: 3.5rem;
   border: none;
   border-bottom: 0.12rem solid var(--pink-200);
   font-size: 1.2rem;
@@ -138,10 +137,15 @@ const EditSectionInput = styled.div`
   color: var(--pink-600);
   margin-bottom: 0.3rem;
   padding-left: 0.2rem;
-  line-height: 4rem;
   vertical-align: baseline;
   transition: border-bottom 0.12s;
   text-align: left;
+  padding-bottom: 1rem;
+  > span {
+    color: var(--pink-300);
+    margin: 0;
+    height: 3vh;
+  }
 `;
 
 const EditSectionNotice = styled.div`
@@ -155,17 +159,25 @@ const EditSectionNotice = styled.div`
 `;
 export default function MyPage() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
+  const [name, setName] = useState(null);
+  const [accountId, setAccountId] = useState(null);
+  const [certification, setCertification] = useState(false);
   const token = localStorage.getItem("access_token");
 
-  useEffect(async () => {
-    // If name, id is in local storage, set it to state
-    axios.defaults.headers.common.Authorization = token;
-    const { data } = await axios.get("/users");
-    console.log("data is ", data);
-    setName(localStorage.getItem("name"));
-    setId(localStorage.getItem("id"));
+  const GetUser = async () => {
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await axios.get("/api/users");
+      console.log("user data is ", response.data);
+      setName(response.data.name);
+      setAccountId(response.data.accountId);
+      setCertification(response.data.certification);
+    } catch (error) {
+      console.log("empty or error");
+    }
+  };
+  useEffect(() => {
+    GetUser();
   }, []);
   return (
     <Container>
@@ -182,7 +194,7 @@ export default function MyPage() {
             <ProfileStatsContent>5.2km</ProfileStatsContent>
           </ProfileStats>
           <ProfileStats>
-            <ProfileStatsTitle>포인트</ProfileStatsTitle>
+            <ProfileStatsTitle>이번 주 산책한 시간</ProfileStatsTitle>
             <ProfileStatsContent>4시간 30분</ProfileStatsContent>
           </ProfileStats>
         </ProfileColumnContainer>
@@ -190,16 +202,26 @@ export default function MyPage() {
       <EditSectionContainer>
         <EditSection>
           <EditSectionTitle>이름</EditSectionTitle>
-          <EditSectionInput>{name}</EditSectionInput>
+          <EditSectionInput>{!name && <span>미입력</span>}</EditSectionInput>
         </EditSection>
         <EditSection>
           <EditSectionTitle>1365 아이디</EditSectionTitle>
-          <EditSectionInput>{id}</EditSectionInput>
+          <EditSectionInput>
+            {!accountId && <span>미입력</span>}
+          </EditSectionInput>
         </EditSection>
         <EditSection>
           <EditSectionTitle>관광해설사 인증여부</EditSectionTitle>
-          <EditSectionInput>인증되었습니다.</EditSectionInput>
-          <EditSectionNotice>인증정보 확인하기</EditSectionNotice>
+          {!certification ? (
+            <EditSectionInput>
+              <span>미인증</span>
+            </EditSectionInput>
+          ) : (
+            <>
+              <EditSectionInput>인증되었습니다.</EditSectionInput>
+              <EditSectionNotice>인증정보 확인하기</EditSectionNotice>
+            </>
+          )}
         </EditSection>
         <EditButton onClick={() => navigate("/edit")}>
           프로필 수정하기

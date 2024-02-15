@@ -1,11 +1,12 @@
 import { useState } from "react";
 import SliderListItem from "./SliderListItem";
 import { useEffect } from "react";
-import aroundWalkPath from "../../dummyData/aroundWalkPath.json";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { sliderState } from "../../store/map";
+import { useRecoilValue } from "recoil";
+import { sliderState, mapState } from "../../store/map";
 import { ReactComponent as NoWay } from "../../assets/no_way.svg";
 import styled from "styled-components";
+import axios from "axios";
+import { getAccessToken } from "../../utils/token";
 
 const NoWayContainer = styled.div`
   padding: 1rem 0;
@@ -20,20 +21,31 @@ const ListSlider = ({ style }) => {
   const [data, setData] = useState([]);
   const [toggleWalkPath, setToggleWalkPath] = useState(null);
   const { menu } = useRecoilValue(sliderState);
-  const [iconSpotState, setIconSpotState] = useRecoilState(recoilIconSpotState);
-
-  useEffect(() => {
-    setData(aroundWalkPath.promenades);
-    setIconSpotState(aroundWalkPath.promenades);
-  }, []);
-
+  const token = getAccessToken();
+  let { center } = useRecoilValue(mapState);
+  if (!center.lat || !center.lng) {
+    center = { lat: center.Ma, lng: center.La };
+  }
   const typeToMenuMapping = {
     ERRAND: "심부름",
     WALK_TOGETHER: "함께 걷기",
     TOURISM: "관광해설",
     PLOGGING: "플로깅",
   };
+  const type = typeToMenuMapping[menu];
   const filteredData = data.filter((el) => typeToMenuMapping[el.type] === menu);
+  const getWalkPath = async () => {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    console.log(">>>>", center.lat, center.lng);
+    const promenadesRes = await axios.get(
+      `/api/promenades?type=ERRAND&coordinate=${center.lat},${center.lng}`
+    );
+    console.log(promenadesRes);
+    // setData(promenadesRes);
+  };
+  useEffect(() => {
+    getWalkPath();
+  }, [menu, center]);
 
   return (
     <div style={{ style }}>
