@@ -36,7 +36,7 @@ export default function KakaoMap() {
 
   const [mapState, setMapState] = useRecoilState(mapStateRecoil);
 
-  const { loading, locked } = mapState;
+  const { loading, locked, center } = mapState;
 
   const [path, setPath] = useRecoilState(pathState);
 
@@ -78,20 +78,21 @@ export default function KakaoMap() {
     const interval = setInterval(() => {
       if (window.kakao) {
         const container = mapContainerRef.current;
-        const pos = {
-          lat: 36.3766263411,
-          lng: 127.38719915966,
-        };
-        if (location.lat && location.lng) {
-          pos.lat = location.lat;
-          pos.lng = location.lng;
-        }
+        // const pos = {
+        //   lat: 36.3766263411,
+        //   lng: 127.38719915966,
+        // };
+        // if (location.lat && location.lng) {
+        //   pos.lat = location.lat;
+        //   pos.lng = location.lng;
+        // }
         const options = {
-          center: new window.kakao.maps.LatLng(pos.lat, pos.lng),
+          center: new window.kakao.maps.LatLng(center.lat, center.lng),
           level: 3,
         };
         setMapState((prev) => ({ ...prev, center: options.center }));
         const newMap = new window.kakao.maps.Map(container, options);
+
         mapRef.current = newMap;
         setMapState((prev) => ({ ...prev, loading: false }));
         clearInterval(interval);
@@ -103,6 +104,16 @@ export default function KakaoMap() {
   useEffect(() => {
     if (!mapRef.current) return;
     if (!window.kakao) return;
+    window.kakao.maps.event.addListener(mapRef.current, "dragend", () => {
+      // Update Recoil state with new center location
+      const newCenter = mapRef.current.getCenter();
+      console.log("lat is ", newCenter.getLat(), "lng is ", newCenter.getLng());
+
+      setMapState((prev) => ({
+        ...prev,
+        center: { lat: newCenter.getLat(), lng: newCenter.getLng() },
+      }));
+    });
     const map = mapRef.current;
     var path3 = new window.kakao.maps.Polyline({
       path: path.map((pos) => new window.kakao.maps.LatLng(pos.lat, pos.lng)),
