@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import gachiIcon from "../assets/Group 1.svg";
-
+import { useNavigate } from "react-router-dom";
 import ShoppingBagIcon from "../assets/shopping_bag.svg";
 import PetIcon from "../assets/pet.svg";
 import GuideIcon from "../assets/guide_location.svg";
@@ -15,7 +15,7 @@ const MainTextContainer = styled.div`
 `;
 const MainText = styled.div`
   position: absolute;
-  left: 4rem;
+  left: 3rem;
   top: 6rem;
   font-size: 2.3rem;
   font-weight: bold;
@@ -33,7 +33,7 @@ const SectionTitle = styled.div`
   font-weight: 500;
   color: var(--gray-400);
   text-align: left;
-  margin-left: 3.9rem;
+  margin-left: 3rem;
   margin-top: 2.5rem;
 `;
 const GridSectionContainer1 = styled.div`
@@ -160,6 +160,7 @@ export default function HomePage() {
       ],
     },
   ];
+  const navigate = useNavigate();
   return (
     <Container>
       <MainTextContainer>
@@ -173,21 +174,21 @@ export default function HomePage() {
       <SectionTitle>산책 가이드 보러가기</SectionTitle>
       <GridSectionContainer1>
         <GridSectionContainer2>
-          <GridSection>
+          <GridSection onClick={() => navigate("/guide/errand")}>
             <GridSectionIcon src={ShoppingBagIcon} />
             <GridSectionText>심부름 가이드</GridSectionText>
           </GridSection>
-          <GridSection>
+          <GridSection onClick={() => navigate("/guide/walk-together")}>
             <GridSectionIcon src={PetIcon} />
             <GridSectionText>함께 걷기 가이드</GridSectionText>
           </GridSection>
         </GridSectionContainer2>
         <GridSectionContainer2>
-          <GridSection>
+          <GridSection onClick={() => navigate("/guide/tourism")}>
             <GridSectionIcon src={GuideIcon} />
             <GridSectionText>관광해설 가이드</GridSectionText>
           </GridSection>
-          <GridSection>
+          <GridSection onClick={() => navigate("/guide/plogging")}>
             <GridSectionIcon src={GarbageIcon} />
             <GridSectionText>플로깅 가이드</GridSectionText>
           </GridSection>
