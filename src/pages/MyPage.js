@@ -162,6 +162,7 @@ export default function MyPage() {
   const [name, setName] = useState(null);
   const [accountId, setAccountId] = useState(null);
   const [certification, setCertification] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
   const token = localStorage.getItem("access_token");
 
   const GetUser = async () => {
@@ -171,6 +172,7 @@ export default function MyPage() {
       console.log("user data is ", response.data);
       setName(response.data.name);
       setAccountId(response.data.accountId);
+      setProfileImage(response.data.profileImage);
       setCertification(response.data.certification);
     } catch (error) {
       console.log("empty or error");
@@ -184,7 +186,11 @@ export default function MyPage() {
       <MyPageTitle>마이페이지</MyPageTitle>
       <ProfileContainer>
         <ProfileColumnContainer>
-          <ProfileImage src="https://via.placeholder.com/150" />
+          <ProfileImage
+            src={
+              profileImage ? profileImage : "https://via.placeholder.com/150"
+            }
+          />
           <ProfileName>{name} 님</ProfileName>
           <ProfileBelowName>가치가유 상위 23%</ProfileBelowName>
         </ProfileColumnContainer>
@@ -202,12 +208,14 @@ export default function MyPage() {
       <EditSectionContainer>
         <EditSection>
           <EditSectionTitle>이름</EditSectionTitle>
-          <EditSectionInput>{!name && <span>미입력</span>}</EditSectionInput>
+          <EditSectionInput>
+            {name ? name : <span>미입력</span>}
+          </EditSectionInput>
         </EditSection>
         <EditSection>
           <EditSectionTitle>1365 아이디</EditSectionTitle>
           <EditSectionInput>
-            {!accountId && <span>미입력</span>}
+            {accountId ? accountId : <span>미입력</span>}
           </EditSectionInput>
         </EditSection>
         <EditSection>

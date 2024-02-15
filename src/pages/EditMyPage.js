@@ -205,17 +205,19 @@ export default function EditMyPage() {
   };
 
   const imgRef = useRef();
-  let imgURL;
+  const [imgURL, setImgURL] = useState(null);
 
   const loadImg = (e) => {
     const imgFile = e.target.files[0];
-    let imgURL = URL.createObjectURL(imgFile);
-    console.log(imgURL);
-    imgRef.current.setAttribute("src", imgURL);
+    const url = URL.createObjectURL(imgFile);
+    setImgURL(imgFile);
+    imgRef.current.setAttribute("src", url);
   };
 
   const imageSave = () => {
-    localStorage.setItem("profile", JSON.stringify(imgURL)); // localStorage에 이미지URL을 profile키에 저장하고,
+    const v = JSON.stringify(imgURL);
+    console.log("imageSave", v);
+    localStorage.setItem("profile", v); // localStorage에 이미지URL을 profile키에 저장하고,
     const profile = localStorage.getItem("profile"); // 다시 localStorage에서 img데이터 꺼내와서 변수에 저장해준다.
     const isVaild = JSON.parse(profile);
 
@@ -224,6 +226,19 @@ export default function EditMyPage() {
       console.log("no image");
       return;
     }
+
+    // axios로 서버에 post 요청을 보내서 이미지를 저장해준다.
+    console.log("token: ", token);
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("accountId", id);
+    formData.append("profileImage", imgURL);
+    axios.post("/api/users", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     imgRef.current.setAttribute("src", isVaild);
     window.alert("프로필 이미지가 저장되었습니다!.");
