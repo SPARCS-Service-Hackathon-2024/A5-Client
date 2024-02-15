@@ -113,6 +113,24 @@ const EditButton = styled.div`
   touch-action: none;
 `;
 
+const WalkButton = styled.div`
+  position: absolute;
+  left: 50%;
+  bottom: 13rem;
+  transform: translateX(-50%);
+  width: 86%;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--gray-000);
+  background-color: var(--pink-500);
+  touch-action: none;
+`;
+
 const EditSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -239,6 +257,9 @@ export default function MyPage() {
             </>
           )}
         </EditSection>
+        <WalkButton onClick={() => navigate("/history")}>
+          산책 기록 보기
+        </WalkButton>
         <EditButton onClick={() => navigate("/edit")}>
           프로필 수정하기
         </EditButton>

@@ -61,7 +61,6 @@ export default function SearchPanel() {
     const y = ((touch.clientY - 18) / window.innerHeight) * 100;
     const currentPanelPos = (y - panelTop) / (100 - panelTop - panelBottom);
     if (currentPanelPos >= 0 && currentPanelPos <= 1) {
-      console.log("move", panelPos * (100 - panelTop - panelBottom) + panelTop);
       setPanelPos(currentPanelPos);
       panelPosRef.current = currentPanelPos;
     }

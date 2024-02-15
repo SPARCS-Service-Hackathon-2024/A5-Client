@@ -40,7 +40,7 @@ const ListSlider = ({ style }) => {
     const promenadesRes = await axios.get(
       `/api/promenades?type=ERRAND&coordinate=${center.lat},${center.lng}`
     );
-    console.log(promenadesRes);
+    console.log(promenadesRes.data);
     // setData(promenadesRes);
   };
   useEffect(() => {
