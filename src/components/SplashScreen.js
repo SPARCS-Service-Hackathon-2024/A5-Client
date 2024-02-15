@@ -40,7 +40,7 @@ const Logo = styled.div`
 
 const LogoText = styled.div`
   position: absolute;
-  top: 53%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 12rem;
@@ -53,7 +53,7 @@ const LogoText = styled.div`
   @keyframes fadeIn {
     from {
       opacity: 0;
-      top: 53%;
+      top: 55%;
     }
     to {
       opacity: 1;

@@ -6,7 +6,7 @@ import searchIcon from "../assets/gray_gachi_gayu.svg";
 import homeIcon from "../assets/gray_house.svg";
 import profileIcon from "../assets/gray_person.svg";
 
-import selectedSearchIcon from "../assets/pink_gachi_gayu.svg";
+import selectedSearchIcon from "../assets/gachi_gayu.svg";
 import selectedHomeIcon from "../assets/house.svg";
 import selectedProfileIcon from "../assets/person.svg";
 import { styled } from "styled-components";
@@ -49,16 +49,19 @@ export default function NavBar() {
 
   const btns = {
     search: {
+      paths: ["search", "navigation"],
       icon: searchIcon,
       selectedIcon: selectedSearchIcon,
       callback: () => clickIcon("search"),
     },
     home: {
+      paths: ["home"],
       icon: homeIcon,
       selectedIcon: selectedHomeIcon,
       callback: () => clickIcon("home"),
     },
     profile: {
+      paths: ["profile"],
       icon: profileIcon,
       selectedIcon: selectedProfileIcon,
       callback: () => clickIcon("profile"),
@@ -72,12 +75,12 @@ export default function NavBar() {
           <Icon
             src={btns[key].icon}
             onClick={btns[key].callback}
-            selected={selected === key}
+            selected={btns[key].paths.includes(selected)}
           />
           <SelectedIcon
             src={btns[key].selectedIcon}
             onClick={btns[key].callback}
-            selected={selected === key}
+            selected={btns[key].paths.includes(selected)}
           />
         </span>
       ))}

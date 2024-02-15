@@ -74,6 +74,7 @@ const GridSectionText = styled.div`
   font-size: 1rem;
   padding-left: 2vw;
   padding-right: 1rem;
+  word-break: keep-all;
 `;
 const RowSectionContainer = styled.div`
   margin-top: 1rem;

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ReactComponent as Download } from "../assets/download_photo.svg";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { navigateState } from "../store/navigation";
 
 const VerifyContainer = styled.div`
   > div:first-child {
@@ -55,8 +57,10 @@ const WarningTitle = styled.div`
 `;
 export default function CheckPhotoDone() {
   const navigate = useNavigate();
+  const [navigateFlag, setNavigateFlag] = useRecoilState(navigateState);
   const continueWalk = () => {
     console.log("continue walk");
+    setNavigateFlag(true);
     navigate("/navigation");
   };
   const [takenImage, setTakenImage] = useState(
@@ -64,7 +68,6 @@ export default function CheckPhotoDone() {
   );
 
   useEffect(() => {
-    // Saved with localStorage.setItem("photo", data);
     const data = localStorage.getItem("photo");
     setTakenImage(data);
   }, []);
