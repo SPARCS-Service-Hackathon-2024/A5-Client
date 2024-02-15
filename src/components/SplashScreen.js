@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import gachiGayu from "../assets/gachi_gayu.svg";
+import gachiGayu from "../assets/Group 1.svg";
 import gachiText from "../assets/gachi_text.svg";
 
 const KAKAO_KEY = process.env.REACT_APP_KAKAO_KEY;
@@ -17,7 +17,9 @@ const Container = styled.div`
   z-index: 100;
   justify-content: center;
   align-items: center;
-  background-color: var(--pink-600);
+  background-color: ${({ loaded }) =>
+    loaded ? "var(--gray-000)" : "var(--pink-600)"};
+  transition: background-color 0.9s;
 `;
 
 const Logo = styled.div`
@@ -27,8 +29,11 @@ const Logo = styled.div`
   transform: translate(-50%, -50%);
   width: 12rem;
   height: 12rem;
-  transition: top 0.9s;
-  background-color: var(--gray-000);
+  transition:
+    top 0.9s,
+    background-color 0.9s;
+  background-color: ${({ loaded }) =>
+    !loaded ? "var(--gray-000)" : "var(--pink-600)"};
   -webkit-mask: url("${gachiGayu}") no-repeat center / contain;
   mask: url(${gachiGayu}) no-repeat center / contain;
 `;
@@ -41,7 +46,7 @@ const LogoText = styled.div`
   width: 12rem;
   height: 12rem;
   opacity: 0;
-  background-color: var(--gray-000);
+  background-color: var(--pink-600);
   -webkit-mask: url("${gachiText}") no-repeat center / contain;
   mask: url(${gachiText}) no-repeat center / contain;
   ${(props) => props.loaded && "animation: fadeIn 0.9s 0.45s forwards;"}
@@ -98,12 +103,13 @@ export default function SplashScreen() {
     }, 2000);
   }, []);
   return (
-    <Container>
+    <Container loaded={loaded}>
       <Logo src={gachiGayu} loaded={loaded} />
       <LogoText src={gachiText} loaded={loaded} />
       <KakaoLoginButton
         onClick={() => {
-          window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
+          // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
+          navigate("/search");
         }}
         loaded={loaded}
       >
