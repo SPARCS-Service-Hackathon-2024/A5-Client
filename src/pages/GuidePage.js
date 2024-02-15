@@ -5,6 +5,9 @@ import { ReactComponent as Errand } from "../assets/guide/whole_errand.svg";
 import GuideHeader from "../components/GuideHeader";
 import Footer from "../components/common/Footer";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { sliderState } from "../store/map";
+import { useNavigate } from "react-router-dom";
 
 const GuideContainer = styled.div`
   background: linear-gradient(to bottom, transparent 50%, var(--bg-color) 50%);
@@ -18,6 +21,14 @@ const GuideContainer = styled.div`
 `;
 
 const GuidePage = ({ item }) => {
+  const [{ menu }, setMenuState] = useRecoilState(sliderState);
+
+  const navigate = useNavigate();
+  const searchMenu = () => {
+    console.log("pls");
+    setMenuState({ menu: item });
+    navigate("/search");
+  };
   return (
     <GuideContainer
       bgColor={
@@ -41,8 +52,7 @@ const GuidePage = ({ item }) => {
         <Errand />
       )}
 
-      {/* TODO: funct 추가 */}
-      <Footer first="확인" second={`${item} 찾기`} />
+      <Footer first="확인" second={`${item} 찾기`} funct={() => searchMenu()} />
     </GuideContainer>
   );
 };

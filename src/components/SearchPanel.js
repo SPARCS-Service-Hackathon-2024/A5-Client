@@ -104,7 +104,9 @@ export default function SearchPanel() {
       >
         <DragBar onTouchStart={onTouchStart} />
         <PanelCategory>
-          <div>{menu !== "주변 산책로" && menu.concat(", 가치가유!")}</div>
+          <div>
+            {menu === "주변 산책로" ? menu : menu.concat(", 가치가유!")}
+          </div>
         </PanelCategory>
         <ListSlider
           ref={panelRef}
