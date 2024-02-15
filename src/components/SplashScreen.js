@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import gachiGayu from "../assets/Group 1.svg";
 import gachiText from "../assets/gachi_text.svg";
+import { setToken } from "../utils/token";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const KAKAO_KEY = process.env.REACT_APP_KAKAO_KEY;
-const redirect_uri = "http://localhost:3000/auth";
+// const KAKAO_KEY = process.env.REACT_APP_KAKAO_KEY;
+// const redirect_uri = "http://localhost:3000/oauth2/authorization";
 
 const Container = styled.div`
   display: flex;
@@ -96,6 +98,19 @@ const KakaoLoginButton = styled.div`
 export default function SplashScreen() {
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(false);
+  const login = () => {
+    window.location.href =
+      "http://gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/oauth2/authorization/kakao";
+    console.log(11);
+    const params = useParams();
+    const accessToken = params.access_token;
+    const refreshToken = params.refresh_token;
+    console.log("token is ", accessToken);
+    setToken({
+      accessToken,
+      refreshToken,
+    });
+  };
   useEffect(() => {
     setTimeout(() => {
       // navigate("/search");
@@ -108,8 +123,7 @@ export default function SplashScreen() {
       <LogoText src={gachiText} loaded={loaded} />
       <KakaoLoginButton
         onClick={() => {
-          // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
-          navigate("/search");
+          login();
         }}
         loaded={loaded}
       >

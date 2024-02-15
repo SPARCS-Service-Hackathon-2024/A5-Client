@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { GlobalStyle, muiTheme, theme } from "./style/theme";
 import { ThemeProvider } from "styled-components";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
@@ -24,8 +30,32 @@ import WalkHistory from "./pages/WalkHistory";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { useEffect, useState } from "react";
+import { setToken } from "./utils/token";
 
 const pageOrder = ["/navigation", "/search", "/home", "/profile", "/edit"];
+
+function Auth() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if certain parameters are present in the URL
+    const { search } = location;
+    const params = new URLSearchParams(search);
+    console.log("Location", location);
+
+    if (params.has("access_token") || params.has("refresh_token")) {
+      const accessToken = params.get("access_token");
+      const refreshToken = params.get("refresh_token");
+      setToken({
+        accessToken,
+        refreshToken,
+      });
+      navigate("/search");
+    }
+  }, [location]);
+  return <></>;
+}
 
 function RouteList() {
   const [lastLocation, setLastLocation] = useState(null);
@@ -77,6 +107,7 @@ function RouteList() {
           <Route path="/guide/plogging" element={<GuidePage item="플로깅" />} />
           <Route path="/edit" element={<EditMyPage />} />
           <Route path="/history" element={<WalkHistory />} />
+          <Route path="/oauth2/authorization" element={<Auth />} />
         </Routes>
       </CSSTransition>
     </TransitionGroup>
