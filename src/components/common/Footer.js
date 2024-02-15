@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 const FooterContainer = styled.div`
   position: fixed;
   bottom: 0;
+  width: 100vw;
   background-color: white;
-  padding: 1.4rem;
+  padding-bottom: 1.4rem;
   font-weight: 500;
   font-size: 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  gap: 2rem;
   > div {
     min-width: 42vw;
     height: 7vh;
@@ -22,6 +22,8 @@ const FooterContainer = styled.div`
     border-radius: 16px;
     font-weight: 600;
     border-bottom: 2px solid lightgray;
+    width: 80%;
+    margin: 0 1rem;
   }
 `;
 

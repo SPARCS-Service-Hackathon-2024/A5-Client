@@ -1,3 +1,13 @@
+import Footer from "../components/common/Footer";
+
 export default function VerifyPage() {
-  return <div>Verify</div>;
+  const takePhoto = () => {
+    console.log("photo");
+  };
+  return (
+    <>
+      <div>Verify</div>
+      <Footer second="촬영하기" funct={takePhoto} />
+    </>
+  );
 }
