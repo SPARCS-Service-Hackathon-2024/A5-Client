@@ -1,5 +1,6 @@
 import { ReactComponent as Ok } from "../assets/ok.svg";
 import styled from "styled-components";
+import Footer from "../components/common/Footer";
 
 const NavContainer = styled.div`
   padding: 5rem;
@@ -25,6 +26,7 @@ const Desc = styled.div`
   margin-top: 3rem;
   margin-bottom: 2rem;
   font-size: 1.6rem;
+  font-weight: 600;
 `;
 
 export default function VerifySuccessPage() {
@@ -45,6 +47,7 @@ export default function VerifySuccessPage() {
           <InfoItem>자격증 번호: 11-06-273641</InfoItem>
         </Pinkbox>
       </NavContainer>
+      <Footer first="재인증하기" second="다음" />
     </>
   );
 }
