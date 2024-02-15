@@ -20,7 +20,10 @@ const ListSlider = ({ style }) => {
   const [toggleWalkPath, setToggleWalkPath] = useState(null);
   const { menu } = useRecoilValue(sliderState);
   const token = getAccessToken();
-  const { center } = useRecoilValue(mapState);
+  let { center } = useRecoilValue(mapState);
+  if (!center.lat || !center.lng) {
+    center = { lat: center.Ma, lng: center.La };
+  }
   const typeToMenuMapping = {
     ERRAND: "심부름",
     WALK_TOGETHER: "함께 걷기",
@@ -28,9 +31,10 @@ const ListSlider = ({ style }) => {
     PLOGGING: "플로깅",
   };
   const type = typeToMenuMapping[menu];
+  const filteredData = data.filter((el) => typeToMenuMapping[el.type] === menu);
   const getWalkPath = async () => {
-    axios.defaults.headers.common.Authorization = token;
-
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    console.log(">>>>", center.lat, center.lng);
     const promenadesRes = await axios.get(
       `/api/promenades?type=ERRAND&coordinate=${center.lat},${center.lng}`
     );
@@ -40,8 +44,6 @@ const ListSlider = ({ style }) => {
   useEffect(() => {
     getWalkPath();
   }, [menu, center]);
-
-  const filteredData = data.filter((el) => typeToMenuMapping[el.type] === menu);
 
   return (
     <div style={{ style }}>
