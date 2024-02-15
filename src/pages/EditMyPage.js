@@ -197,7 +197,6 @@ export default function EditMyPage() {
       const personalResponse = await axios.get(`/api/users`);
       if (personalResponse.data) {
         setData(personalResponse.data);
-        console.log(2);
         if (personalResponse.data.profileImage) {
           // data.image
           console.log("file is ", personalResponse.data.profileImage);
@@ -220,7 +219,6 @@ export default function EditMyPage() {
 
   const imageSave = () => {
     const v = JSON.stringify(imgURL);
-    console.log("imageSave", v);
     localStorage.setItem("profile", v); // localStorage에 이미지URL을 profile키에 저장하고,
     const profile = localStorage.getItem("profile"); // 다시 localStorage에서 img데이터 꺼내와서 변수에 저장해준다.
     const isVaild = JSON.parse(profile);

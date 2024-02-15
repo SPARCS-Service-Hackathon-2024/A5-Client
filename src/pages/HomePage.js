@@ -6,6 +6,9 @@ import ShoppingBagIcon from "../assets/shopping_bag.svg";
 import PetIcon from "../assets/pet.svg";
 import GuideIcon from "../assets/guide_location.svg";
 import GarbageIcon from "../assets/garbage.svg";
+import axios from "axios";
+
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   position: absolute;
@@ -107,22 +110,62 @@ const RowSection = styled.div`
 `;
 
 export default function HomePage() {
+  // const [popularityData, setPopularityData] = useState([]);
+  // const [latestData, setLatestData] = useState([]);
+  // useEffect(() => {
+  //   const url = "/api/feeds";
+  //   (async () => {
+  //     try {
+  //       const response = await axios.get(url, {
+  //         headers: { "Content-Type": "application/json" },
+  //         params: { kind: "POPULARITY" },
+  //       });
+  //       setPopularityData(response.data);
+  //       const response2 = await axios.get(url, { params: { kind: "LATEST" } });
+  //       setLatestData(response2.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   })();
+  // }, []);
+  // const data = [
+  //   {
+  //     category: "인기 산책로",
+  //     data: popularityData.map((d) => ({
+  //       title: d.title,
+  //       date: d.startAt,
+  //       img: PetIcon,
+  //       distance: d.length,
+  //       color: "--yellow",
+  //     })),
+  //   },
+  //   {
+  //     category: "최신 산책로",
+  //     data: latestData.map((d) => ({
+  //       title: d.title,
+  //       date: d.startAt,
+  //       img: PetIcon,
+  //       distance: d.length,
+  //       color: "--green",
+  //     })),
+  //   },
+  // ];
   const data = [
     {
       category: "인기 산책로",
       data: [
         {
-          title: "장애인생활이동지원센터 심부름 산책a",
+          title: "장애인생활이동지원센터 심부름 산책",
           date: "D-15",
-          img: PetIcon,
+          img: ShoppingBagIcon,
           distance: "대전장애인생활이동지원센터, 600m 20분",
           color: "--yellow",
         },
         {
-          title: "장애인생활이동지원센터 심부름 산책b",
+          title: "대전천 유역 플로깅 봉사 이벤트",
           date: "D-15",
-          img: PetIcon,
-          distance: "대전장애인생활이동지원센터, 600m 20분",
+          img: GarbageIcon,
+          distance: "대전천, 650m 65분",
           color: "--green",
         },
       ],
@@ -131,36 +174,17 @@ export default function HomePage() {
       category: "인기 산책로2",
       data: [
         {
-          title: "장애인생활이동지원센터 심부름 산책c",
+          title: "동물구조119 입양센터 오전 함께걷기",
           date: "D-15",
           img: PetIcon,
-          distance: "대전장애인생활이동지원센터, 600m 20분",
+          distance: "대전동물보호센터, 950m 40분",
           color: "--purple",
         },
         {
-          title: "장애인생활이동지원센터 심부름 산책d",
+          title: "대전시립미술관 야외 조형물 안내 도슨트",
           date: "D-15",
-          img: PetIcon,
-          distance: "대전장애인생활이동지원센터, 600m 20분",
-          color: "--orange",
-        },
-      ],
-    },
-    {
-      category: "인기 산책로3",
-      data: [
-        {
-          title: "장애인생활이동지원센터 심부름 산책e",
-          date: "D-15",
-          img: PetIcon,
-          distance: "대전장애인생활이동지원센터, 600m 20분",
-          color: "--purple",
-        },
-        {
-          title: "장애인생활이동지원센터 심부름 산책f",
-          date: "D-15",
-          img: PetIcon,
-          distance: "대전장애인생활이동지원센터, 600m 20분",
+          img: GuideIcon,
+          distance: "대전시립미술관, 450m 30분",
           color: "--orange",
         },
       ],
@@ -216,6 +240,7 @@ export default function HomePage() {
                       marginTop: "1.5rem",
                       textAlign: "left",
                       width: "15rem",
+                      wordBreak: "keep-all",
                     }}
                   >
                     {t.title}
