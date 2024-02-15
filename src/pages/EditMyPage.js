@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-
+import ProfileConfirmModal from "../components/common/ProfileConfirmModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "../hooks/useModal";
 
 const Container = styled.div`
   position: fixed;
@@ -163,9 +164,20 @@ const DoneWithoutButton = styled.div`
 
 export default function EditMyPage() {
   const [name, setName] = useState("");
+  const { openModal, closeModal } = useModal();
+
   const [id, setId] = useState("");
   const disabled = !name || !id;
   const navigate = useNavigate();
+  const noScore = () => {
+    openModal(ProfileConfirmModal, {
+      handleClose: closeModal,
+      onConfirm: () => {
+        navigate("/profile");
+        closeModal();
+      },
+    });
+  };
   return (
     <Container>
       <MyPageTitle>
@@ -215,7 +227,9 @@ export default function EditMyPage() {
       </EditSectionContainer>
 
       <DoneButton className={disabled ? "disabled" : ""}>입력 완료</DoneButton>
-      <DoneWithoutButton>점수 인정 없이 산책하기</DoneWithoutButton>
+      <DoneWithoutButton onClick={() => noScore()}>
+        점수 인정 없이 산책하기
+      </DoneWithoutButton>
     </Container>
   );
 }
