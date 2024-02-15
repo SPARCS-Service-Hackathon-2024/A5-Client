@@ -20,6 +20,7 @@ import CheckPhotoLayout from "./components/layout/CheckPhoto";
 import CheckPhotoPage from "./pages/CheckPhotoPage";
 import CheckPhotoDonePage from "./pages/CheckPhotoDonePage";
 import GuidePage from "./pages/GuidePage";
+import WalkHistory from "./pages/WalkHistory";
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
                 element={<GuidePage item="플로깅" />}
               />
               <Route path="/edit" element={<EditMyPage />} />
+              <Route path="/history" element={<WalkHistory />} />
             </Routes>
           </BrowserRouter>
         </MuiThemeProvider>

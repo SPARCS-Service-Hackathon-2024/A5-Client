@@ -215,7 +215,7 @@ export default function EditMyPage() {
     imgRef.current.setAttribute("src", imgURL);
   };
 
-  const IMGsave = () => {
+  const imageSave = () => {
     localStorage.setItem("profile", JSON.stringify(imgURL)); // localStorage에 이미지URL을 profile키에 저장하고,
     const profile = localStorage.getItem("profile"); // 다시 localStorage에서 img데이터 꺼내와서 변수에 저장해준다.
     const isVaild = JSON.parse(profile);
@@ -300,7 +300,7 @@ export default function EditMyPage() {
 
       <DoneButton
         className={disabled ? "disabled" : ""}
-        onClick={() => IMGsave()}
+        onClick={() => imageSave()}
       >
         입력 완료
       </DoneButton>
