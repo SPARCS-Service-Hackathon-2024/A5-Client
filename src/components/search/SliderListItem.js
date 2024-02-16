@@ -98,7 +98,13 @@ const Description = styled.div`
   color: gray;
   font-size: 0.75rem;
 `;
-const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
+const SliderListItem = ({
+  data,
+  setData,
+  toggleWalkPath,
+  setToggleWalkPath,
+  toggleRecommend,
+}) => {
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
   const [highlight, setHighlight] = useRecoilState(highlightState);
@@ -116,9 +122,19 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
     }
   };
   const recommendPath = (id) => {
+    toggleRecommend(id);
+    setData((prevData) =>
+      prevData.map((item) => (item.id === id ? { ...item, saved: true } : item))
+    );
     console.log(id, " saved");
   };
   const unRecommendPath = (id) => {
+    toggleRecommend(id);
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.id === id ? { ...item, saved: false } : item
+      )
+    );
     console.log(id, " unsaved");
   };
   const VerifyOrStart = async () => {

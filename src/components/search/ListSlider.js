@@ -66,10 +66,11 @@ const ListSlider = ({ style }) => {
           {data.map((el) => (
             <SliderListItem
               data={el}
+              setData={setData}
               key={el.id}
               toggleWalkPath={toggleWalkPath}
               setToggleWalkPath={setToggleWalkPath}
-              toggleRecommend={ToggleRecommend}
+              toggleRecommend={() => ToggleRecommend(el.id)}
             />
           ))}
         </>
