@@ -72,8 +72,8 @@ export default function KakaoMap() {
         clickable: true,
         content: `<img src=${typeMap[spot.type]} style="width: 3rem; filter: drop-shadow(0.15rem 0rem 0rem white) drop-shadow(-0.15rem 0rem 0rem white) drop-shadow(0rem 0.15rem 0rem white) drop-shadow(0rem -0.15rem 0rem white) drop-shadow(0.07rem 0.07rem 0.4rem rgba(0, 0, 0, 0.25));" />`,
         position: new window.kakao.maps.LatLng(
-          Number(spot.location.latitude),
-          Number(spot.location.longitude)
+          Number(spot.location.longitude),
+          Number(spot.location.latitude)
         ),
         xAnchor: 0.5,
         yAnchor: 0.5,
