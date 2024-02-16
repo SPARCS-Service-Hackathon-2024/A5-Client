@@ -7,6 +7,7 @@ import { ReactComponent as NoWay } from "../../assets/no_way.svg";
 import styled from "styled-components";
 import axios from "axios";
 import { getAccessToken } from "../../utils/token";
+import { iconSpotState as recoilIconSpotState } from "../../store/map";
 
 const NoWayContainer = styled.div`
   padding: 1rem 0;
@@ -41,6 +42,7 @@ const ListSlider = ({ style }) => {
       );
 
       setData(promenadesRes.data.promenades);
+      setIconSpotState(promenadesRes.data.promenades);
       console.log("data is ", data);
     } catch (e) {
       console.log(e);
