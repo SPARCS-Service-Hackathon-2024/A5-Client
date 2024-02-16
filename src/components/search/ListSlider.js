@@ -102,9 +102,11 @@ const ListSlider = ({ style }) => {
         },
       },
     ];
-    setData(d);
-    setIconSpotState(d);
-    // setData(promenadesRes);
+    // setData(d);
+    // setIconSpotState(d);
+    console.log("55", promenadesRes);
+    setData(promenadesRes.data.promenades);
+    setIconSpotState(promenadesRes.data.promenades);
   };
   useEffect(() => {
     getWalkPath();
