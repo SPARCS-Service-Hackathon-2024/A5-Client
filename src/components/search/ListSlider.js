@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SliderListItem from "./SliderListItem";
 import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { sliderState, mapState } from "../../store/map";
 import { ReactComponent as NoWay } from "../../assets/no_way.svg";
 import styled from "styled-components";
@@ -21,6 +21,7 @@ const ListSlider = ({ style }) => {
   const [data, setData] = useState([]);
   const [toggleWalkPath, setToggleWalkPath] = useState(null);
   const { menu } = useRecoilValue(sliderState);
+  const [iconSpotState, setIconSpotState] = useRecoilState(recoilIconSpotState);
   const token = getAccessToken();
   let { center } = useRecoilValue(mapState);
   if (!center.lat || !center.lng) {
@@ -39,7 +40,7 @@ const ListSlider = ({ style }) => {
     const promenadesRes = await axios.get(
       `/api/promenades?type=ERRAND&coordinate=${center.lat},${center.lng}`
     );
-    setData([
+    const d = [
       {
         id: 12,
         title: "말티즈와 산책하기",
@@ -100,7 +101,9 @@ const ListSlider = ({ style }) => {
           longitude: "127.1234",
         },
       },
-    ]);
+    ];
+    setData(d);
+    setIconSpotState(d);
     // setData(promenadesRes);
   };
   useEffect(() => {

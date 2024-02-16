@@ -60,7 +60,7 @@ export default function KakaoMap() {
     if (!window.kakao) return;
     const map = mapRef.current;
     const markers = iconSpotState.map((spot) => {
-      console.log(spot.location.latitude, spot.location.longitude);
+      console.log("|", spot.location.latitude, spot.location.longitude);
       const typeMap = {
         WALK_TOGETHER: Pet,
         ERRAND: ShoppingBag,
