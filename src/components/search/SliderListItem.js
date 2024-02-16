@@ -98,7 +98,13 @@ const Description = styled.div`
   color: gray;
   font-size: 0.75rem;
 `;
-const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
+const SliderListItem = ({
+  data,
+  setData,
+  toggleWalkPath,
+  setToggleWalkPath,
+  toggleRecommend,
+}) => {
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
   const [highlight, setHighlight] = useRecoilState(highlightState);
@@ -106,8 +112,8 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
   const changeToggle = (id) => {
     console.log(data.location.latitude, data.location.longitude);
     setHighlight({
-      y: Number(data.location.latitude),
-      x: Number(data.location.longitude),
+      y: Number(data.location.longitude),
+      x: Number(data.location.latitude),
     });
     if (toggleWalkPath === id) {
       setToggleWalkPath(null);
@@ -115,12 +121,20 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
       setToggleWalkPath(id);
     }
   };
-  const savePath = (id) => {
-    //TODO: save path api
+  const recommendPath = (id) => {
+    toggleRecommend(id);
+    setData((prevData) =>
+      prevData.map((item) => (item.id === id ? { ...item, saved: true } : item))
+    );
     console.log(id, " saved");
   };
-  const unSavePath = (id) => {
-    //TODO: unsave path api
+  const unRecommendPath = (id) => {
+    toggleRecommend(id);
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.id === id ? { ...item, saved: false } : item
+      )
+    );
     console.log(id, " unsaved");
   };
   const VerifyOrStart = async () => {
@@ -177,11 +191,11 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
       {data.id === toggleWalkPath && (
         <ToggleContainer>
           {data.saved ? (
-            <SavedButton onClick={() => unSavePath(data.id)}>
-              저장됨
+            <SavedButton onClick={() => unRecommendPath(data.id)}>
+              추천완료
             </SavedButton>
           ) : (
-            <SaveButton onClick={() => savePath(data.id)}>저장</SaveButton>
+            <SaveButton onClick={() => recommendPath(data.id)}>추천</SaveButton>
           )}
           <StartButton onClick={() => VerifyOrStart()}>시작</StartButton>
         </ToggleContainer>
