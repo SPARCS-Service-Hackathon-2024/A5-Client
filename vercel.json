@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "http://Gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/:path*"
+    },
+    {
+      "source": "/:path*/",
+      "destination": "http://Gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/:path*/"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}
