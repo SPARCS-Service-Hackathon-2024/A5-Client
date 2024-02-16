@@ -7,6 +7,7 @@ import PetIcon from "../assets/pet.svg";
 import GuideIcon from "../assets/guide_location.svg";
 import GarbageIcon from "../assets/garbage.svg";
 import axios from "axios";
+import { getAccessToken } from "../utils/token";
 
 import { useEffect, useState } from "react";
 
@@ -110,46 +111,33 @@ const RowSection = styled.div`
 `;
 
 export default function HomePage() {
-  // const [popularityData, setPopularityData] = useState([]);
-  // const [latestData, setLatestData] = useState([]);
-  // useEffect(() => {
-  //   const url = "/api/feeds";
-  //   (async () => {
-  //     try {
-  //       const response = await axios.get(url, {
-  //         headers: { "Content-Type": "application/json" },
-  //         params: { kind: "POPULARITY" },
-  //       });
-  //       setPopularityData(response.data);
-  //       const response2 = await axios.get(url, { params: { kind: "LATEST" } });
-  //       setLatestData(response2.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   })();
-  // }, []);
-  // const data = [
-  //   {
-  //     category: "인기 산책로",
-  //     data: popularityData.map((d) => ({
-  //       title: d.title,
-  //       date: d.startAt,
-  //       img: PetIcon,
-  //       distance: d.length,
-  //       color: "--yellow",
-  //     })),
-  //   },
-  //   {
-  //     category: "최신 산책로",
-  //     data: latestData.map((d) => ({
-  //       title: d.title,
-  //       date: d.startAt,
-  //       img: PetIcon,
-  //       distance: d.length,
-  //       color: "--green",
-  //     })),
-  //   },
-  // ];
+  const [dataPopular, setDataPopular] = useState([]);
+  const [dataLatest, setDataLatest] = useState([]);
+  const token = getAccessToken();
+  const GetPopular = async () => {
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await axios.get("/api/feeds?kind=POPULARITY");
+      console.log("pop data is ", response.data);
+      setDataPopular(response.data);
+    } catch (error) {
+      console.log("empty or error");
+    }
+  };
+  const GetLatest = async () => {
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await axios.get("/api/feeds?kind=LATEST");
+      console.log("latest data is ", response.data);
+      setDataLatest(response.data);
+    } catch (error) {
+      console.log("empty or error");
+    }
+  };
+  useEffect(() => {
+    GetPopular();
+    GetLatest();
+  }, []);
   const data = [
     {
       category: "인기 산책로",
@@ -174,6 +162,7 @@ export default function HomePage() {
       category: "인기 산책로2",
       data: [
         {
+          //id
           title: "장애인생활이동지원센터 심부름 산책",
           date: "D-15",
           img: ShoppingBagIcon,
