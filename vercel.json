@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/:path*",
-      "destination": "http://Gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/:path*"
+      "source": "/api/:path*",
+      "destination": "http://Gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/api/:path*"
     },
     {
-      "source": "/:path*/",
-      "destination": "http://Gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/:path*/"
+      "source": "/api/:path*/",
+      "destination": "http://Gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/api/:path*/"
     },
     {
       "source": "/(.*)",
