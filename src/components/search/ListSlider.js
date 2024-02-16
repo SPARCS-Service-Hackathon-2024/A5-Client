@@ -25,38 +25,58 @@ const ListSlider = ({ style }) => {
     center = { lat: center.Ma, lng: center.La };
   }
   const typeToMenuMapping = {
-    ERRAND: "심부름",
-    WALK_TOGETHER: "함께 걷기",
-    TOURISM: "관광해설",
-    PLOGGING: "플로깅",
+    심부름: "ERRAND",
+    "함께 걷기": "WALK_TOGETHER",
+    관광해설: "TOURISM",
+    플로깅: "PLOGGING",
+    "주변 산책로": "ALL",
   };
   const type = typeToMenuMapping[menu];
-  const filteredData = data.filter((el) => typeToMenuMapping[el.type] === menu);
   const getWalkPath = async () => {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    console.log(">>>>", center.lat, center.lng);
-    const promenadesRes = await axios.get(
-      `/api/promenades?type=ERRAND&coordinate=${center.lat},${center.lng}`
-    );
-    console.log(promenadesRes);
-    // setData(promenadesRes);
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      console.log(">>>>", center.lat, center.lng);
+      // TODO: API TYPE
+      const promenadesRes = await axios.get(
+        `/api/promenades?type=ALL&coordinate=${center.lat},${center.lng}`
+      );
+      setData(promenadesRes.data.promenades);
+      console.log("data is ", promenadesRes);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  const ToggleRecommend = async (id) => {
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await axios.post("/api/saves", { promenadeId: id });
+      console.log("user data is ", response);
+    } catch (error) {
+      console.log("empty or error");
+    }
+  };
+  useEffect(() => {
+    ToggleRecommend();
+  }, []);
   useEffect(() => {
     getWalkPath();
   }, [menu, center]);
 
   return (
     <div style={{ style }}>
-      {menu === "주변 산책로" ? (
-        data.map((el) => (
-          <SliderListItem
-            data={el}
-            key={el.id}
-            toggleWalkPath={toggleWalkPath}
-            setToggleWalkPath={setToggleWalkPath}
-          />
-        ))
-      ) : filteredData.length === 0 ? (
+      {!(data.length === 0) ? (
+        <>
+          {data.map((el) => (
+            <SliderListItem
+              data={el}
+              key={el.id}
+              toggleWalkPath={toggleWalkPath}
+              setToggleWalkPath={setToggleWalkPath}
+            />
+          ))}
+        </>
+      ) : (
         <NoWayContainer>
           <NoWay />
           <div>
@@ -65,15 +85,6 @@ const ListSlider = ({ style }) => {
             현재 위치를 옮기거나 GPS 수신을 확인해주세요.
           </div>
         </NoWayContainer>
-      ) : (
-        filteredData.map((el) => (
-          <SliderListItem
-            data={el}
-            key={el.id}
-            toggleWalkPath={toggleWalkPath}
-            setToggleWalkPath={setToggleWalkPath}
-          />
-        ))
       )}
     </div>
   );

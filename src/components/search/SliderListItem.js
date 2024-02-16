@@ -106,12 +106,10 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
       setToggleWalkPath(id);
     }
   };
-  const savePath = (id) => {
-    //TODO: save path api
+  const recommendPath = (id) => {
     console.log(id, " saved");
   };
-  const unSavePath = (id) => {
-    //TODO: unsave path api
+  const unRecommendPath = (id) => {
     console.log(id, " unsaved");
   };
   const VerifyOrStart = () => {
@@ -163,11 +161,11 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
       {data.id === toggleWalkPath && (
         <ToggleContainer>
           {data.saved ? (
-            <SavedButton onClick={() => unSavePath(data.id)}>
-              저장됨
+            <SavedButton onClick={() => unRecommendPath(data.id)}>
+              추천완료
             </SavedButton>
           ) : (
-            <SaveButton onClick={() => savePath(data.id)}>저장</SaveButton>
+            <SaveButton onClick={() => recommendPath(data.id)}>추천</SaveButton>
           )}
           <StartButton onClick={() => VerifyOrStart()}>시작</StartButton>
         </ToggleContainer>
