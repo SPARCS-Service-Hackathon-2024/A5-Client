@@ -1,6 +1,9 @@
 import { ReactComponent as Ok } from "../assets/ok.svg";
 import styled from "styled-components";
 import Footer from "../components/common/Footer";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const NavContainer = styled.div`
   padding: 5rem;
@@ -30,6 +33,18 @@ const Desc = styled.div`
 `;
 
 export default function VerifySuccessPage() {
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("access_token");
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      console.log("token", token);
+      const personalResponse = await axios.get(`/api/users`);
+      console.log("+", personalResponse);
+      setData(personalResponse.data);
+    })();
+  }, []);
   return (
     <>
       <NavContainer>
@@ -41,13 +56,13 @@ export default function VerifySuccessPage() {
         </Desc>
         <Pinkbox>
           {/* dummy */}
-          <InfoItem>성명: 김이박</InfoItem>
+          <InfoItem>성명: {data ? data.name : "-"}</InfoItem>
           <InfoItem>생년월일: 2000.01.26</InfoItem>
           <InfoItem>발급일자: 2021.11.06</InfoItem>
           <InfoItem>자격증 번호: 11-06-273641</InfoItem>
         </Pinkbox>
       </NavContainer>
-      <Footer first="재인증하기" second="다음" />
+      <Footer first="재인증하기" second="다음" funct={() => navigate(-2)} />
     </>
   );
 }

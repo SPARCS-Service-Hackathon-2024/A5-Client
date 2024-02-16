@@ -192,7 +192,7 @@ export default function MyPage() {
       setName(response.data.name);
       setAccountId(response.data.accountId);
       setProfileImage(response.data.profileImage);
-      setCertification(response.data.certification);
+      setCertification(response.data.certificated);
       setData(response.data);
     } catch (error) {
       console.log("empty or error");

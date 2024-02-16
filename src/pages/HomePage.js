@@ -155,10 +155,10 @@ export default function HomePage() {
       category: "인기 산책로",
       data: [
         {
-          title: "장애인생활이동지원센터 심부름 산책",
+          title: "동물구조119 입양센터 오전 함께걷기",
           date: "D-15",
-          img: ShoppingBagIcon,
-          distance: "대전장애인생활이동지원센터, 600m 20분",
+          img: PetIcon,
+          distance: "대전동물보호센터, 950m 40분",
           color: "--yellow",
         },
         {
@@ -174,10 +174,10 @@ export default function HomePage() {
       category: "인기 산책로2",
       data: [
         {
-          title: "동물구조119 입양센터 오전 함께걷기",
+          title: "장애인생활이동지원센터 심부름 산책",
           date: "D-15",
-          img: PetIcon,
-          distance: "대전동물보호센터, 950m 40분",
+          img: ShoppingBagIcon,
+          distance: "대전장애인생활이동지원센터, 600m 20분",
           color: "--purple",
         },
         {

@@ -230,7 +230,6 @@ export default function EditMyPage() {
     }
 
     // axios로 서버에 post 요청을 보내서 이미지를 저장해준다.
-    console.log("token: ", token);
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     const formData = new FormData();
     formData.append("name", name);

@@ -9,6 +9,9 @@ import VerifyModal from "../common/VerifyModal";
 import { useModal } from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
 import StartModal from "../common/StartModal";
+import { useRecoilState } from "recoil";
+import { highlightState } from "../../store/map";
+import axios from "axios";
 
 const ListWrapper = styled.div`
   cursor: pointer;
@@ -98,8 +101,14 @@ const Description = styled.div`
 const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
+  const [highlight, setHighlight] = useRecoilState(highlightState);
 
   const changeToggle = (id) => {
+    console.log(data.location.latitude, data.location.longitude);
+    setHighlight({
+      y: Number(data.location.latitude),
+      x: Number(data.location.longitude),
+    });
     if (toggleWalkPath === id) {
       setToggleWalkPath(null);
     } else {
@@ -114,23 +123,28 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
     //TODO: unsave path api
     console.log(id, " unsaved");
   };
-  const VerifyOrStart = () => {
-    //TODO: if verified
-    // openModal(VerifyModal, {
-    //   handleClose: closeModal,
-    //   onSubmit: () => {
-    //     navigate("/verification");
-    // closeModal();
-    //   },
-    // });
-    //if not
-    openModal(StartModal, {
-      handleClose: closeModal,
-      onConfirm: () => {
-        navigate("/navigation");
-        closeModal();
-      },
-    });
+  const VerifyOrStart = async () => {
+    console.log("VerifyOrStart", data);
+    const response = await axios.get("/api/users");
+    console.log("user", response.data);
+    if (data.type == "TOURISM" && !response.data.certificated) {
+      openModal(VerifyModal, {
+        handleClose: closeModal,
+        onSubmit: () => {
+          navigate("/verification");
+          closeModal();
+        },
+      });
+    } else {
+      //if not
+      openModal(StartModal, {
+        handleClose: closeModal,
+        onConfirm: () => {
+          navigate("/navigation");
+          closeModal();
+        },
+      });
+    }
   };
   return (
     <ListWrapper>
