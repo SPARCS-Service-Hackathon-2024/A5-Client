@@ -3,6 +3,9 @@ import KakaoMap from "../components/KakaoMap";
 import SearchBar from "../components/SearchBar";
 import SearchCategory from "../components/SearchCategory";
 import SearchPanel from "../components/SearchPanel";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { pathState } from "../store/path";
 
 const MapContainer = styled.div`
   position: absolute;
@@ -13,6 +16,10 @@ const MapContainer = styled.div`
 `;
 
 export default function SearchPage() {
+  const [path, setPath] = useRecoilState(pathState);
+  useEffect(() => {
+    setPath([]);
+  }, []);
   return (
     <MapContainer>
       <KakaoMap />

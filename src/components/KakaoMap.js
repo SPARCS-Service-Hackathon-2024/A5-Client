@@ -56,15 +56,11 @@ export default function KakaoMap() {
 
   const markerRef = useRef(null);
   useEffect(() => {
-    console.log(1);
     if (!mapRef.current) return;
-    console.log(2);
     if (!window.kakao) return;
-    console.log(3);
     const map = mapRef.current;
-    console.log(4, iconSpotState);
     const markers = iconSpotState.map((spot) => {
-      console.log("><8><", spot.location.latitude, spot.location.longitude);
+      console.log("><9><", spot.location.latitude, spot.location.longitude);
       const typeMap = {
         WALK_TOGETHER: Pet,
         ERRAND: ShoppingBag,

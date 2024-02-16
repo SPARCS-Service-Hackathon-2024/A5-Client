@@ -101,11 +101,9 @@ export default function SplashScreen() {
   const login = () => {
     window.location.href =
       "http://gachigayu-lb-2027077742.ap-northeast-2.elb.amazonaws.com/oauth2/authorization/kakao";
-    console.log(11);
     const params = useParams();
     const accessToken = params.access_token;
     const refreshToken = params.refresh_token;
-    console.log("token is ", accessToken);
     setToken({
       accessToken,
       refreshToken,

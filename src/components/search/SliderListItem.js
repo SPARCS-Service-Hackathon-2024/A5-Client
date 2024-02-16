@@ -110,7 +110,6 @@ const SliderListItem = ({
   const [highlight, setHighlight] = useRecoilState(highlightState);
 
   const changeToggle = (id) => {
-    console.log(data.location.latitude, data.location.longitude);
     setHighlight({
       y: Number(data.location.longitude),
       x: Number(data.location.latitude),

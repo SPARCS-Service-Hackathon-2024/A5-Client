@@ -42,7 +42,6 @@ function Auth() {
     // Check if certain parameters are present in the URL
     const { search } = location;
     const params = new URLSearchParams(search);
-    console.log("Location", location);
 
     if (params.has("access_token") || params.has("refresh_token")) {
       const accessToken = params.get("access_token");
