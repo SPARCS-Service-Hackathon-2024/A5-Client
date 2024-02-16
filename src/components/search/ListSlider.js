@@ -33,18 +33,74 @@ const ListSlider = ({ style }) => {
   };
   const type = typeToMenuMapping[menu];
   const getWalkPath = async () => {
-    try {
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-      console.log(">>>>", center.lat, center.lng);
-      // TODO: API TYPE
-      const promenadesRes = await axios.get(
-        `/api/promenades?type=ALL&coordinate=${center.lat},${center.lng}`
-      );
-      setData(promenadesRes.data.promenades);
-      console.log("data is ", promenadesRes);
-    } catch (e) {
-      console.log(e);
-    }
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    const promenadesRes = await axios.get(
+      `/api/promenades?type=ERRAND&coordinate=${center.lat},${center.lng}`
+    );
+    setData([
+      {
+        id: 12,
+        title: "말티즈와 산책하기",
+        place: "대전광역시 동물보호센터",
+        startAt: "2024-02-23T18:00:00.000000",
+        distance: 142, //산책로 출발지까지의 거리 (m)
+        length: 1200, //산책로 길이 (m)
+        time: 30, //분 단위
+        type: "WALK_TOGETHER",
+        saved: true,
+        location: {
+          latitude: "36.4587718562076",
+          longitude: "127.382830214701",
+        },
+      },
+      {
+        id: 17,
+        title: "힐링 족욕체험장 해설하기",
+        place: "유성온천 야외 족욕체험장",
+        startAt: "2024-02-23T13:30:00.000000",
+        distance: 253,
+        length: 532,
+        time: 13,
+        type: "TOURISM",
+        saved: false,
+        location: {
+          latitude: "36.3557374250018",
+          longitude: "127.342111051912",
+        },
+      },
+      {
+        id: 19,
+        title: "플로깅하기",
+        place: "대전광역시 유성구 봉명동",
+        startAt: "2024-02-23T13:30:00.000000",
+        distance: 253,
+        length: 532,
+        time: 13,
+        type: "PLOGGING",
+        saved: false,
+        location: {
+          latitude: "36.1234",
+          longitude: "127.1234",
+        },
+      },
+      {
+        id: 20,
+        title: "심부름 하기",
+        place: "대전광역시 유성구 봉명동",
+        startAt: "2024-02-23T13:30:00.000000",
+        distance: 253,
+        length: 532,
+        time: 13,
+        type: "ERRAND",
+        saved: false,
+        location: {
+          latitude: "36.1234",
+          longitude: "127.1234",
+        },
+      },
+    ]);
+    console.log("data is ", promenadesRes);
+    // setData(promenadesRes);
   };
 
   const ToggleRecommend = async (id) => {

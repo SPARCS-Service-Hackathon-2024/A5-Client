@@ -179,6 +179,8 @@ export default function EditMyPage() {
   const disabled = !name || !id;
   const token = localStorage.getItem("access_token");
 
+  const [data, setData] = useState(null);
+
   const navigate = useNavigate();
   const noScore = () => {
     openModal(ProfileConfirmModal, {
@@ -191,9 +193,10 @@ export default function EditMyPage() {
   };
   const getPersonalInfo = async () => {
     try {
-      axios.defaults.headers.common.Authorization = token;
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       const personalResponse = await axios.get(`/api/users`);
-      if (personalResponse.data.success) {
+      if (personalResponse.data) {
+        setData(personalResponse.data);
         if (personalResponse.data.profileImage) {
           // data.image
           console.log("file is ", personalResponse.data.profileImage);
@@ -205,17 +208,18 @@ export default function EditMyPage() {
   };
 
   const imgRef = useRef();
-  let imgURL;
+  const [imgURL, setImgURL] = useState(null);
 
   const loadImg = (e) => {
     const imgFile = e.target.files[0];
-    let imgURL = URL.createObjectURL(imgFile);
-    console.log(imgURL);
-    imgRef.current.setAttribute("src", imgURL);
+    const url = URL.createObjectURL(imgFile);
+    setImgURL(imgFile);
+    imgRef.current.setAttribute("src", url);
   };
 
   const imageSave = () => {
-    localStorage.setItem("profile", JSON.stringify(imgURL)); // localStorage에 이미지URL을 profile키에 저장하고,
+    const v = JSON.stringify(imgURL);
+    localStorage.setItem("profile", v); // localStorage에 이미지URL을 profile키에 저장하고,
     const profile = localStorage.getItem("profile"); // 다시 localStorage에서 img데이터 꺼내와서 변수에 저장해준다.
     const isVaild = JSON.parse(profile);
 
@@ -224,6 +228,18 @@ export default function EditMyPage() {
       console.log("no image");
       return;
     }
+
+    // axios로 서버에 post 요청을 보내서 이미지를 저장해준다.
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("accountId", id);
+    formData.append("profileImage", imgURL);
+    axios.post("/api/users", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     imgRef.current.setAttribute("src", isVaild);
     window.alert("프로필 이미지가 저장되었습니다!.");
@@ -263,7 +279,14 @@ export default function EditMyPage() {
           />
 
           <label htmlFor="chooseFile">
-            <ProfileImage src="https://via.placeholder.com/150" ref={imgRef} />
+            <ProfileImage
+              src={
+                data && data.profileImage
+                  ? data.profileImage
+                  : "https://via.placeholder.com/150"
+              }
+              ref={imgRef}
+            />
           </label>
           <ProfileName>{name} 님</ProfileName>
         </ProfileColumnContainer>

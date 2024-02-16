@@ -113,6 +113,24 @@ const EditButton = styled.div`
   touch-action: none;
 `;
 
+const WalkButton = styled.div`
+  position: absolute;
+  left: 50%;
+  bottom: 13rem;
+  transform: translateX(-50%);
+  width: 86%;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--gray-000);
+  background-color: var(--pink-500);
+  touch-action: none;
+`;
+
 const EditSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -162,6 +180,8 @@ export default function MyPage() {
   const [name, setName] = useState(null);
   const [accountId, setAccountId] = useState(null);
   const [certification, setCertification] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+  const [data, setData] = useState(null);
   const token = localStorage.getItem("access_token");
 
   const GetUser = async () => {
@@ -171,7 +191,9 @@ export default function MyPage() {
       console.log("user data is ", response.data);
       setName(response.data.name);
       setAccountId(response.data.accountId);
-      setCertification(response.data.certification);
+      setProfileImage(response.data.profileImage);
+      setCertification(response.data.certificated);
+      setData(response.data);
     } catch (error) {
       console.log("empty or error");
     }
@@ -184,30 +206,42 @@ export default function MyPage() {
       <MyPageTitle>마이페이지</MyPageTitle>
       <ProfileContainer>
         <ProfileColumnContainer>
-          <ProfileImage src="https://via.placeholder.com/150" />
+          <ProfileImage
+            src={
+              profileImage ? profileImage : "https://via.placeholder.com/150"
+            }
+          />
           <ProfileName>{name} 님</ProfileName>
-          <ProfileBelowName>가치가유 상위 23%</ProfileBelowName>
+          <ProfileBelowName>
+            가치가유 상위 {data && data.top ? data.top : "-"}
+          </ProfileBelowName>
         </ProfileColumnContainer>
         <ProfileColumnContainer>
           <ProfileStats>
             <ProfileStatsTitle>이번 주 산책한 거리</ProfileStatsTitle>
-            <ProfileStatsContent>5.2km</ProfileStatsContent>
+            <ProfileStatsContent>
+              {data ? data.weekLength : "-"}
+            </ProfileStatsContent>
           </ProfileStats>
           <ProfileStats>
             <ProfileStatsTitle>이번 주 산책한 시간</ProfileStatsTitle>
-            <ProfileStatsContent>4시간 30분</ProfileStatsContent>
+            <ProfileStatsContent>
+              {data ? data.weekTime : "-"}
+            </ProfileStatsContent>
           </ProfileStats>
         </ProfileColumnContainer>
       </ProfileContainer>
       <EditSectionContainer>
         <EditSection>
           <EditSectionTitle>이름</EditSectionTitle>
-          <EditSectionInput>{!name && <span>미입력</span>}</EditSectionInput>
+          <EditSectionInput>
+            {name ? name : <span>미입력</span>}
+          </EditSectionInput>
         </EditSection>
         <EditSection>
           <EditSectionTitle>1365 아이디</EditSectionTitle>
           <EditSectionInput>
-            {!accountId && <span>미입력</span>}
+            {accountId ? accountId : <span>미입력</span>}
           </EditSectionInput>
         </EditSection>
         <EditSection>
@@ -223,6 +257,9 @@ export default function MyPage() {
             </>
           )}
         </EditSection>
+        <WalkButton onClick={() => navigate("/history")}>
+          산책 기록 보기
+        </WalkButton>
         <EditButton onClick={() => navigate("/edit")}>
           프로필 수정하기
         </EditButton>

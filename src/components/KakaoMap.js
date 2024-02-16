@@ -56,7 +56,6 @@ export default function KakaoMap() {
 
   const markerRef = useRef(null);
   useEffect(() => {
-    console.log("iconSpotState", iconSpotState);
     if (!mapRef.current) return;
     if (!window.kakao) return;
     const map = mapRef.current;
@@ -143,16 +142,16 @@ export default function KakaoMap() {
     const interval = setInterval(() => {
       if (window.kakao) {
         const container = mapContainerRef.current;
-        // const pos = {
-        //   lat: 36.3766263411,
-        //   lng: 127.38719915966,
-        // };
-        // if (location.lat && location.lng) {
-        //   pos.lat = location.lat;
-        //   pos.lng = location.lng;
-        // }
+        const pos = {
+          lat: 36.3766263411,
+          lng: 127.38719915966,
+        };
+        if (location.lat && location.lng) {
+          pos.lat = location.lat;
+          pos.lng = location.lng;
+        }
         const options = {
-          center: new window.kakao.maps.LatLng(center.lat, center.lng),
+          center: new window.kakao.maps.LatLng(pos.lat, pos.lng),
           level: 3,
         };
         setMapState((prev) => ({ ...prev, center: options.center }));
