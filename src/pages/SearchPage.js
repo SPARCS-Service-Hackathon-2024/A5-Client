@@ -20,7 +20,7 @@ export default function SearchPage() {
       <SearchCategory
         style={{
           position: "absolute",
-          top: "6.5rem",
+          top: "6.51rem",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 10,
