@@ -12,8 +12,9 @@ import watchLocation from "../hooks/watchLocation";
 import { navigateState } from "../store/navigation";
 import { useNavigate } from "react-router-dom";
 import AchievementModal from "../components/AchievementModal";
-
+import { getAccessToken } from "../utils/token";
 import { calculateDistance } from "../utils/mapcalc";
+import axios from "axios";
 
 const MapContainer = styled.div`
   position: absolute;
@@ -113,7 +114,21 @@ export default function NavigationPage() {
       sub_desc: destination_desc,
       tip: "",
     };
+    FinishWalk();
   }
+  const FinishWalk = async (id) => {
+    const token = getAccessToken();
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await axios.post("/api/activities/finish", {
+        promenadeId: id,
+      });
+      console.log("user data is ", response.data);
+    } catch (error) {
+      console.log("empty or error");
+    }
+  };
+
   useEffect(() => {
     if (navigateFlag) {
       setAchievement(true);

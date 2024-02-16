@@ -162,6 +162,7 @@ export default function HomePage() {
       category: "인기 산책로2",
       data: [
         {
+          //id
           title: "장애인생활이동지원센터 심부름 산책",
           date: "D-15",
           img: ShoppingBagIcon,
