@@ -1,13 +1,15 @@
 import { useState } from "react";
 import HistoryItem from "../components/search/HistoryItem";
 import { useEffect } from "react";
-import aroundWalkPath from "../dummyData/aroundWalkPath.json";
 import { ReactComponent as NoWay } from "../assets/no_way.svg";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { getAccessToken } from "../utils/token";
 
 const NoWayContainer = styled.div`
   padding: 1rem 0;
+  height: 100vh;
   > div:last-child {
     margin-top: 1rem;
   }
@@ -44,11 +46,24 @@ const BackButton = styled.i`
 
 const WalkHistory = () => {
   const [data, setData] = useState([]);
+  const token = getAccessToken();
+
   const navigate = useNavigate();
   useEffect(() => {
-    setData(aroundWalkPath.promenades);
+    GetHistory();
     console.log("data is ", data);
   }, []);
+
+  const GetHistory = async () => {
+    try {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await axios.get("/api/users/activities");
+      console.log("user data is ", response.data.activities);
+      setData(response.data.activities);
+    } catch (error) {
+      console.log("empty or error");
+    }
+  };
 
   return (
     <HistoryWrapper>
