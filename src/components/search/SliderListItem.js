@@ -106,8 +106,8 @@ const SliderListItem = ({ data, toggleWalkPath, setToggleWalkPath }) => {
   const changeToggle = (id) => {
     console.log(data.location.latitude, data.location.longitude);
     setHighlight({
-      y: Number(data.location.latitude),
-      x: Number(data.location.longitude),
+      y: Number(data.location.longitude),
+      x: Number(data.location.latitude),
     });
     if (toggleWalkPath === id) {
       setToggleWalkPath(null);
