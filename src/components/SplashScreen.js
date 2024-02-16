@@ -42,7 +42,7 @@ const Logo = styled.div`
 
 const LogoText = styled.div`
   position: absolute;
-  top: 55%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 12rem;
@@ -55,11 +55,11 @@ const LogoText = styled.div`
   @keyframes fadeIn {
     from {
       opacity: 0;
-      top: 55%;
+      top: 58%;
     }
     to {
       opacity: 1;
-      top: 50%;
+      top: 53%;
     }
   }
 `;
@@ -67,7 +67,7 @@ const LogoText = styled.div`
 const KakaoLoginButton = styled.div`
   position: absolute;
   left: 50%;
-  top: 63%;
+  top: 66%;
   transform: translate(-50%, -50%);
   width: 80%;
   height: 2.5rem;
@@ -86,11 +86,11 @@ const KakaoLoginButton = styled.div`
   @keyframes fadeInBtn {
     from {
       opacity: 0;
-      top: 63%;
+      top: 66%;
     }
     to {
       opacity: 1;
-      top: 60%;
+      top: 63%;
     }
   }
 `;
