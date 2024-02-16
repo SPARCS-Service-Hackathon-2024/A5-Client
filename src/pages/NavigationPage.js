@@ -114,7 +114,7 @@ export default function NavigationPage() {
       sub_desc: destination_desc,
       tip: "",
     };
-    FinishWalk();
+    FinishWalk(1);
   }
   const FinishWalk = async (id) => {
     const token = getAccessToken();
